@@ -57,7 +57,9 @@ yarn test
 [MIT](LICENSE)
 
 ## Boilerplate
-Built on Digia boilerplate & create-react-app
+
+Built on Digia boilerplate & create-react-app:
+
 https://github.com/digiaonline/react-boilerplate
 
 
