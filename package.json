@@ -1,4 +1,13 @@
 {
+  "name": "console-app",
+  "description": "Control your browser like it's 1990!",
+  "version": "0.0.1",
+  "author": {
+    "name": "Mika Lindell",
+    "url": "https://github.com/mika-lindell"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/mika-lindell/console-app",
   "private": true,
   "dependencies": {
     "autoprefixer": "7.1.2",
@@ -52,6 +61,7 @@
     "react-dev-utils": "^4.0.0",
     "react-hot-loader": "next",
     "react-test-renderer": "^15.6.1",
+    "rimraf": "^2.6.2",
     "stylefmt": "^6.0.0",
     "stylelint": "^8.0.0",
     "stylelint-config-standard": "^17.0.0",

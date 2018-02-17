@@ -79,7 +79,9 @@ function getClientEnvironment(publicUrl) {
         // be wrong if the dev server is being proxied.
         'REACT_APP_HMR_PROTOCOL': process.env.REACT_APP_HMR_PROTOCOL || '',
         'REACT_APP_HMR_HOSTNAME': process.env.REACT_APP_HMR_HOSTNAME || '',
-        'REACT_APP_HMR_PORT': process.env.REACT_APP_HMR_PORT || ''
+        'REACT_APP_HMR_PORT': process.env.REACT_APP_HMR_PORT || '',
+        'NPM_PACKAGE_DESCRIPTION': process.env.npm_package_description || '',
+        'NPM_PACKAGE_VERSION': process.env.npm_package_version || '',
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

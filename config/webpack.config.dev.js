@@ -229,19 +229,6 @@ module.exports = {
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.
     new InterpolateHtmlPlugin(env.raw),
-    // Generate manifest-file required by Chrome extensions
-    // https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate/blob/master/webpack.config.js
-    new CopyWebpackPlugin([{
-      from: paths.appManifest,
-      transform: function (content, path) {
-        // generates the manifest file using the package.json informations
-        return Buffer.from(JSON.stringify({
-          description: process.env.npm_package_description,
-          version: process.env.npm_package_version,
-          ...JSON.parse(content.toString())
-        }))
-      }
-    }]),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
@@ -269,7 +256,20 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    // Chrome extionsions require static files during development
+    // Generate manifest-file required by Chrome extensions
+    // https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate/blob/master/webpack.config.js
+    new CopyWebpackPlugin([{
+      from: paths.appManifest,
+      transform: function (content, path) {
+        // generates the manifest file using the package.json informations
+        return Buffer.from(JSON.stringify({
+          description: env.raw.NPM_PACKAGE_DESCRIPTION,
+          version: env.raw.NPM_PACKAGE_VERSION,
+          ...JSON.parse(content.toString())
+        }))
+      }
+    }]),
+    // Chrome extensions require static files during development
     new WriteFilePlugin()
   ],
   // Some libraries import Node modules but don't use them in the browser.

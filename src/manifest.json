@@ -1,15 +1,10 @@
 {
   "manifest_version": 2,
-
-  "name": "Mys Amazing Chrome Extension",
+  "name": "My Amazing Chrome Extension",
   "short_name": "MACE",
-  "description": "One pretty catchy description.",
-  "version": "0.0.0.1",
-
-  "minimum_chrome_version": "37",
+  "minimum_chrome_version": "40",
   "permissions": [
   ],
-
 	"chrome_url_overrides" : {
 	  "newtab": "index.html"
 	}

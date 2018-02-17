@@ -1,6 +1,7 @@
 # Console start-page for Chrome
 
 The power of Javascript always at your fingertips.
+
 Control your browser from command line like it's 1990s again!
 
 ### Install dependencies
@@ -61,5 +62,3 @@ yarn test
 Built on Digia boilerplate & create-react-app:
 
 https://github.com/digiaonline/react-boilerplate
-
-
