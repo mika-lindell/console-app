@@ -2,7 +2,7 @@
 
 The power of Javascript always at your fingertips.
 
-Control your browser from command line like it's 1990s again!
+Control your browser like it's 1990s again!
 
 ### Install dependencies
 
