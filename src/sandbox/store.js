@@ -6,11 +6,14 @@ import type {Ref} from 'react'
 class SandboxStore {
   @action
   evaluateJS = (expression: string, sandbox: Ref<'iframe'>) => {
-    const message = {
-      action: 'evaluateJS',
-      expression: expression,
+    const action = {
+      type: 'evaluateJS',
+      payload: {
+        expression,
+      },
     }
-    sandbox.contentWindow.postMessage(message, '*')
+    sandbox.contentWindow.postMessage(action, '*')
+    console.log('App seny an action to sandbox', action)
   }
 }
 

@@ -2,17 +2,20 @@
 
 import React, {Component} from 'react'
 import type {Node} from 'react'
-import type {SyntheticEvent} from 'react-dom'
 // // import {observer} from 'mobx-react'
 // import css from './Hello.css'
 import sandboxStore from '../../sandbox/store'
 import Sandbox from '../../sandbox/components/Sandbox'
 
+type ConsoleProps = {}
+
 // @observer
 export class Console extends Component {
+  props: ConsoleProps
   sandbox: Node
+  handleButtonClick: (ev: SyntheticEvent) => void
 
-  constructor(props) {
+  constructor(props: ConsoleProps) {
     super(props)
     this.handleButtonClick = this.handleButtonClick.bind(this)
   }

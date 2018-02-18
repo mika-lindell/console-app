@@ -1,17 +1,17 @@
 // @flow
 
 window.addEventListener('message', function(ev: MessageEvent) {
-  // $FlowFixMe
-  const {action, expression} = ev.data
   console.log('Sandbox received an action:', ev.data)
-  switch (action) {
+  // $FlowIgnore
+  const {type, payload} = ev.data
+  switch (type) {
     case 'evaluateJS':
       let result = undefined
       let error = undefined
 
       try {
         // Declarations not wrapped in scope should be global scope
-        const parsedExpression = expression
+        const parsedExpression = payload.expression
           .trim()
           .replace(/^const |let |var /g, '')
         // eslint-disable-next-line no-eval
@@ -20,15 +20,16 @@ window.addEventListener('message', function(ev: MessageEvent) {
         error = err.toString()
       }
       // Send the result back
-      ev.source.postMessage(
-        {
-          action: 'evaluateJS',
-          result: result,
+      const response = {
+        type: 'evaluateJS',
+        payload: {
+          result,
           type: typeof result,
-          error: error,
+          error,
         },
-        ev.origin
-      )
+      }
+      ev.source.postMessage(response, ev.origin)
+      console.log('Sandbox sent an action:', response)
       break
     default:
   }
