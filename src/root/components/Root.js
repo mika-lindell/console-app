@@ -1,14 +1,12 @@
 // @flow
 
 import React from 'react'
-import Hello from '../../hello/components/Hello'
+import Console from '../../console/components/Console'
 import css from './Root.css'
 
 const Root = () => (
   <div className={css.component}>
-    <div className={css.routes}>
-      <Hello />
-    </div>
+    <Console />
   </div>
 )
 
