@@ -239,7 +239,7 @@ module.exports = {
       template: paths.appHtml,
       chunks: ['app'],
     }),
-    // Generates an `sandbox.html` file with the sandbox-<script> injected.
+    // Generates a `sandbox.html` file with the sandbox-<script> injected.
     new HtmlWebpackPlugin({
       inject: true,
       filename: 'sandbox.html',

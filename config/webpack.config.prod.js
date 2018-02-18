@@ -57,7 +57,10 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  entry: {
+    app: [require.resolve('./polyfills'), paths.appIndexJs],
+    sandbox: [require.resolve('./polyfills'), paths.sandboxIndexJs],
+  },
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -241,7 +244,28 @@ module.exports = {
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
+      filename: 'index.html',
       template: paths.appHtml,
+      chunks: ['app'],
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
+    }),
+    // Generates a `sandbox.html` file with the sandbox-<script> injected.
+    new HtmlWebpackPlugin({
+      inject: true,
+      filename: 'sandbox.html',
+      template: paths.sandboxHtml,
+      chunks: ['sandbox'],
       minify: {
         removeComments: true,
         collapseWhitespace: true,
