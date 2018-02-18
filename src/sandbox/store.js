@@ -1,20 +1,28 @@
 // @flow
 
-import {action} from 'mobx'
+import {observable, action} from 'mobx'
+import {ACTIONS} from './constants'
+// $FlowFixMe
 import type {Ref} from 'react'
+import type {sandboxResponse, sandboxExpression} from './types'
 
-class SandboxStore {
+class sandboxStore {
+  @observable evaluateJsHistory: Array<sandboxResponse> = []
+
   @action
-  evaluateJS = (expression: string, sandbox: Ref<'iframe'>) => {
+  evaluateJsSend = (payload: sandboxExpression, sandbox: Ref<'iframe'>) => {
     const action = {
-      type: 'evaluateJS',
-      payload: {
-        expression,
-      },
+      type: ACTIONS.evaluateJsSend,
+      payload,
     }
     sandbox.contentWindow.postMessage(action, '*')
-    console.log('App seny an action to sandbox', action)
+    console.log('App sent an action to sandbox', action)
+  }
+
+  @action
+  evaluateJsResponse = (payload: sandboxResponse) => {
+    this.evaluateJsHistory = [...this.evaluateJsHistory, payload]
   }
 }
 
-export default new SandboxStore()
+export default new sandboxStore()

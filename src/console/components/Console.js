@@ -2,15 +2,15 @@
 
 import React, {Component} from 'react'
 import type {Node} from 'react'
-// // import {observer} from 'mobx-react'
+import {observer} from 'mobx-react'
 // import css from './Hello.css'
 import sandboxStore from '../../sandbox/store'
 import Sandbox from '../../sandbox/components/Sandbox'
 
 type ConsoleProps = {}
 
-// @observer
-export class Console extends Component {
+@observer
+class Console extends Component {
   props: ConsoleProps
   sandbox: Node
   handleButtonClick: (ev: SyntheticEvent) => void
@@ -21,13 +21,21 @@ export class Console extends Component {
   }
 
   handleButtonClick(ev: SyntheticEvent) {
-    sandboxStore.evaluateJS('1===1', this.sandbox)
+    const payload = {
+      expression: '1===1',
+    }
+    sandboxStore.evaluateJsSend(payload, this.sandbox)
   }
 
   render() {
     return (
       <div>
-        Console
+        Console{' '}
+        {sandboxStore.evaluateJsHistory[0] ? (
+          sandboxStore.evaluateJsHistory[0].result
+        ) : (
+          'fail'
+        )}
         <button onClick={this.handleButtonClick}>Evaluate 1===1</button>
         <Sandbox iframeRef={node => (this.sandbox = node)} />
       </div>

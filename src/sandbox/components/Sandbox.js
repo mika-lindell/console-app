@@ -1,12 +1,16 @@
 // @flow
 
 import React, {PureComponent} from 'react'
+import {observer} from 'mobx-react'
+import sandboxStore from '../store'
+import {ACTIONS} from '../constants'
 import type {Ref} from 'react'
 
 type SandboxProps = {
   iframeRef: (Ref<'iframe'>) => void
 }
 
+@observer
 class Sandbox extends PureComponent {
   props: SandboxProps
   messageListener: EventListener
@@ -28,6 +32,14 @@ class Sandbox extends PureComponent {
 
   handleMessage(ev: MessageEvent) {
     console.log('App received an action from sandbox', ev.data)
+    // $FlowFixMe
+    const {type, payload} = ev.data
+    switch (type) {
+      case ACTIONS.evaluateJsResponse:
+        sandboxStore.evaluateJsResponse(payload)
+        break
+      default:
+    }
   }
 
   render() {

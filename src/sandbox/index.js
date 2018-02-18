@@ -1,11 +1,12 @@
 // @flow
+import {ACTIONS} from './constants'
 
 window.addEventListener('message', function(ev: MessageEvent) {
   console.log('Sandbox received an action:', ev.data)
-  // $FlowIgnore
+  // $FlowFixMe
   const {type, payload} = ev.data
   switch (type) {
-    case 'evaluateJS':
+    case ACTIONS.evaluateJsSend:
       let result = undefined
       let error = undefined
 
@@ -21,9 +22,9 @@ window.addEventListener('message', function(ev: MessageEvent) {
       }
       // Send the result back
       const response = {
-        type: 'evaluateJS',
+        type: ACTIONS.evaluateJsResponse,
         payload: {
-          result,
+          result: result.toString(),
           type: typeof result,
           error,
         },
@@ -32,5 +33,6 @@ window.addEventListener('message', function(ev: MessageEvent) {
       console.log('Sandbox sent an action:', response)
       break
     default:
+    // TODO add switch default handler and deal with invalid action
   }
 })
