@@ -9,6 +9,7 @@
 }
 
 :root {
+  --cmd-background-color: var(--grey-dark);
   --cmd-border-color: var(--grey);
   --cmd-caret-color: var(--pink);
   --cmd-marker-color: var(--grey);

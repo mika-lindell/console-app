@@ -12,6 +12,9 @@ type LogProps = {
 const Log = observer(({entries}: LogProps) => {
   return (
     <ul className={css.entries}>
+      <li>
+        <h1 className={css.title}>Console</h1>
+      </li>
       {LogStore.entries.map((entry, index) => {
         return (
           <li className={css.entry} key={entry.id}>

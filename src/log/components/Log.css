@@ -3,15 +3,29 @@
 @import '../../styles/measurements.css';
 
 .entries {
+  height: calc(100% - var(--cmd-bar-height));
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   list-style-type: none;
+}
+
+.title {
+  margin: 0 var(--console-margin);
+  font-family: var(--font-code);
+  font-size: 3.75rem;
+  font-weight: var(--font-code-weight-normal);
+  line-height: 1.2;
+  color: var(--console-title-color);
+  margin-bottom: 1rem;
 }
 
 .entry {
   display: flex;
   flex-direction: row;
-  margin: 1.3rem 0;
+  margin: 1rem 0;
   margin-right: var(--console-margin);
   font-family: var(--font-code);
   font-size: var(--font-code-size);

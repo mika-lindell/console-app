@@ -3,9 +3,13 @@
 @import '../../styles/measurements.css';
 
 .wrapper {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
   display: flex;
   flex-direction: row;
   border-top: 1px solid var(--cmd-border-color);
+  background: var(--console-background-color);
 }
 
 .marker {
