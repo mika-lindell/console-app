@@ -1,22 +1,24 @@
 // @flow
+
 import {ACTIONS} from './constants'
 
-export type sandboxExpression = {
+export type CommandLineExpression = {
   expression: string
 }
 
-export type sandboxResponse = {
-  result: ?string,
-  type: ?string,
+export type LogItem = {
+  expression: string,
+  result: string,
+  type: string,
   error: ?string
 }
 
 export type sandboxExpressionPayload = {
   type: ACTIONS.evaluateJsSend,
-  payload: sandboxExpression
+  payload: CommandLineExpression
 }
 
 export type sandboxResponsePayload = {
   type: ACTIONS.evaluateJsResponse,
-  payload: sandboxResponse
+  payload: LogItem
 }

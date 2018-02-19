@@ -25,6 +25,7 @@ window.addEventListener('message', function(ev: MessageEvent) {
       const response = {
         type: ACTIONS.evaluateJsResponse,
         payload: {
+          expression: payload.expression,
           result: String(result),
           type: typeof result,
           error,

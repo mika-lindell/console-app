@@ -6,6 +6,7 @@ import {observer} from 'mobx-react'
 import sandboxStore from '../../sandbox/store'
 import Sandbox from '../../sandbox/components/Sandbox'
 import CommandLine from '../../commandLine/components/CommandLine'
+import Log from '../../log/components/Log'
 
 type ConsoleProps = {}
 type ConsoleState = {
@@ -53,12 +54,8 @@ class Console extends Component {
     const {commandLineValue} = this.state
     return (
       <div>
-        Console{' '}
-        {sandboxStore.evaluateJsHistory[0] ? (
-          sandboxStore.evaluateJsHistory[0].result
-        ) : (
-          'fail'
-        )}
+        Console
+        <Log items={sandboxStore.evaluateJsHistory} />
         <CommandLine
           onChange={this.handleCommandLineChange}
           onKeyPress={this.handleCommandLineKeypress}

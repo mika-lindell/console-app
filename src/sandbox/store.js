@@ -4,13 +4,13 @@ import {observable, action} from 'mobx'
 import {ACTIONS} from './constants'
 // $FlowFixMe
 import type {Ref} from 'react'
-import type {sandboxResponse, sandboxExpression} from './types'
+import type {LogItem, CommandLineExpression} from './types'
 
 class sandboxStore {
-  @observable evaluateJsHistory: Array<sandboxResponse> = []
+  @observable evaluateJsHistory: Array<LogItem> = []
 
   @action
-  evaluateJsSend = (payload: sandboxExpression, sandbox: Ref<'iframe'>) => {
+  evaluateJsSend = (payload: CommandLineExpression, sandbox: Ref<'iframe'>) => {
     const action = {
       type: ACTIONS.evaluateJsSend,
       payload,
@@ -20,8 +20,15 @@ class sandboxStore {
   }
 
   @action
-  evaluateJsResponse = (payload: sandboxResponse) => {
-    this.evaluateJsHistory = [...this.evaluateJsHistory, payload]
+  evaluateJsResponse = (payload: LogItem) => {
+    const emptyHistory = this.evaluateJsHistory.length === 0
+    const lastIndex = this.evaluateJsHistory.length - 1
+    const nextId = emptyHistory ? 0 : this.evaluateJsHistory[lastIndex].id + 1
+    const newItem = {
+      id: nextId,
+      ...payload,
+    }
+    this.evaluateJsHistory = [...this.evaluateJsHistory, newItem]
   }
 }
 
