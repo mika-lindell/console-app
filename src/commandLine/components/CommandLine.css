@@ -1,0 +1,36 @@
+@import '../../styles/colors.css';
+@import '../../styles/measurements.css';
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid var(--cmd-border-color);
+}
+
+.marker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0;
+  flex-basis: var(--console-left-margin);
+  font-family: var(--font-code);
+  font-size: 1.125rem;
+  color: var(--cmd-marker-color);
+  /* width: var(--console-left-margin); */
+}
+
+.inputWrapper {
+  flex: 1;
+}
+
+.input {
+  width: 100%;
+  padding: 1.1rem 0;
+  outline: none;
+  border: none;
+  background: transparent;
+  font-family: var(--font-code);
+  font-size: 0.75rem;
+  color: var(--cmd-text-color);
+  caret-color: var(--cmd-caret-color);
+}

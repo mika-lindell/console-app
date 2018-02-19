@@ -11,14 +11,16 @@ type CommandLineProps = {
 
 const CommandLine = ({value, onChange, onKeyPress}: CommandLineProps) => (
   <div className={css.wrapper}>
-    <div className={css.caret}>></div>
-    <input
-      className={css.input}
-      onChange={onChange}
-      onKeyPress={onKeyPress}
-      value={value}
-      autoFocus
-    />
+    <div className={css.marker}>&gt;</div>
+    <div className={css.inputWrapper}>
+      <input
+        className={css.input}
+        onChange={onChange}
+        onKeyPress={onKeyPress}
+        value={value}
+        autoFocus
+      />
+    </div>
   </div>
 )
 

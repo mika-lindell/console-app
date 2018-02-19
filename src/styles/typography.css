@@ -1,5 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Vollkorn);
+/* @import url(https://fonts.googleapis.com/css?family=Vollkorn); */
 
 :root {
-  --font-serif: 'Vollkorn', serif;
+  font-size: 16px;
+  --font-code: 'Fira Code', monospace;
 }

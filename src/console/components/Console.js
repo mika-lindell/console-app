@@ -7,6 +7,7 @@ import sandboxStore from '../../sandbox/store'
 import Sandbox from '../../sandbox/components/Sandbox'
 import CommandLine from '../../commandLine/components/CommandLine'
 import Log from '../../log/components/Log'
+import css from './Console.css'
 
 type ConsoleProps = {}
 type ConsoleState = {
@@ -53,7 +54,7 @@ class Console extends Component {
   render() {
     const {commandLineValue} = this.state
     return (
-      <div>
+      <div className={css.wrapper}>
         Console
         <Log />
         <CommandLine

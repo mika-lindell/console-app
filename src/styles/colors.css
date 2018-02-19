@@ -1,5 +1,16 @@
 :root {
-  --black: #000;
-  --white: #fff;
-  --silver: #f4f4f4;
+  --grey: #616161;
+  --grey-dark: #212121;
+  --grey-light: #eeeeee;
+  --ocean-light: #4fc3f7;
+  --pink: #f06292;
+  --salmon: #e57373;
+}
+
+:root {
+  --console-background-color: var(--grey-dark);
+  --cmd-border-color: var(--grey);
+  --cmd-caret-color: var(--pink);
+  --cmd-marker-color: var(--grey);
+  --cmd-text-color: var(--grey-light);
 }
