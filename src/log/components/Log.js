@@ -1,30 +1,32 @@
 // @flow
 
 import React from 'react'
+import {observer} from 'mobx-react'
+import LogStore from '../store'
 
 type LogProps = {
-  items: Array<any>
+  entries: Array<any>
 }
 
-const Log = ({items}: LogProps) => {
+const Log = observer(({entries}: LogProps) => {
   return (
     <ul>
-      {items.map((item, index) => {
+      {LogStore.entries.map((entry, index) => {
         return (
-          <li key={item.id}>
-            {item.id}
+          <li key={entry.id}>
+            {entry.id}
             <br />
-            {item.expression}
+            {entry.expression}
             <br />
-            {item.result}({item.type})
+            {entry.result}({entry.type})
             <br />
-            {item.error}
+            {entry.error}
           </li>
         )
       })}
     </ul>
   )
-}
+})
 
 Log.displayName = 'Log'
 export default Log

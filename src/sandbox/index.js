@@ -1,4 +1,5 @@
 // @flow
+
 import {ACTIONS} from './constants'
 
 window.addEventListener('message', function(ev: MessageEvent) {

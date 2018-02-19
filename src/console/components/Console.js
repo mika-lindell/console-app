@@ -55,7 +55,7 @@ class Console extends Component {
     return (
       <div>
         Console
-        <Log items={sandboxStore.evaluateJsHistory} />
+        <Log />
         <CommandLine
           onChange={this.handleCommandLineChange}
           onKeyPress={this.handleCommandLineKeypress}
