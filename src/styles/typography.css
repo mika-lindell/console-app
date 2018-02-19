@@ -3,4 +3,7 @@
 :root {
   font-size: 16px;
   --font-code: 'Fira Code', monospace;
+  --font-code-size: 0.75rem;
+  --font-code-line-height: 1.5;
+  --font-code-weight-normal: 400;
 }

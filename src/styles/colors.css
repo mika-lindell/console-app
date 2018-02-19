@@ -1,4 +1,5 @@
 :root {
+  --teal: #4db6ac;
   --grey: #616161;
   --grey-dark: #212121;
   --grey-light: #eeeeee;
@@ -8,9 +9,12 @@
 }
 
 :root {
-  --console-background-color: var(--grey-dark);
   --cmd-border-color: var(--grey);
   --cmd-caret-color: var(--pink);
   --cmd-marker-color: var(--grey);
   --cmd-text-color: var(--grey-light);
+  --console-background-color: var(--grey-dark);
+  --console-title-color: var(--grey-light);
+  --log-entry-id-color: var(--grey);
+  --log-entry-text-color: var(--grey-light);
 }

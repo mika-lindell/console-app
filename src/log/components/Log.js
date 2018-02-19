@@ -3,6 +3,7 @@
 import React from 'react'
 import {observer} from 'mobx-react'
 import LogStore from '../store'
+import css from './Log.css'
 
 type LogProps = {
   entries: Array<any>
@@ -10,17 +11,23 @@ type LogProps = {
 
 const Log = observer(({entries}: LogProps) => {
   return (
-    <ul>
+    <ul className={css.entries}>
       {LogStore.entries.map((entry, index) => {
         return (
-          <li key={entry.id}>
-            {entry.id}
-            <br />
-            {entry.expression}
-            <br />
-            {entry.result}({entry.type})
-            <br />
-            {entry.error}
+          <li className={css.entry} key={entry.id}>
+            <div className={css.id}>{entry.id + 1}</div>
+            <div className={css.data}>
+              <div className={css.expression}>{entry.expression}</div>
+              {!entry.error && (
+                <div className={css.result}>
+                  => <span className={css.resultHighlight}>
+                    {entry.result}
+                  </span>{' '}
+                  ({entry.type})
+                </div>
+              )}
+              {entry.error && <div className={css.error}>{entry.error}</div>}
+            </div>
           </li>
         )
       })}

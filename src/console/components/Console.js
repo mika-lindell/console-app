@@ -55,7 +55,7 @@ class Console extends Component {
     const {commandLineValue} = this.state
     return (
       <div className={css.wrapper}>
-        Console
+        <h1 className={css.title}>Console</h1>
         <Log />
         <CommandLineInput
           onChange={this.handleCommandLineChange}

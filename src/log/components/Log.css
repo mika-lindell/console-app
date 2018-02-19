@@ -1,0 +1,49 @@
+@import '../../styles/colors.css';
+@import '../../styles/typography.css';
+@import '../../styles/measurements.css';
+
+.entries {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.entry {
+  display: flex;
+  flex-direction: row;
+  margin: 1.3rem 0;
+  margin-right: var(--console-margin);
+  font-family: var(--font-code);
+  font-size: var(--font-code-size);
+  line-height: var(--font-code-line-height);
+  color: var(--log-entry-text-color);
+}
+
+.id {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 0;
+  flex-basis: var(--console-margin);
+  padding-top: 0.14rem;
+  font-family: var(--font-code);
+  font-size: 0.7rem;
+  color: var(--log-entry-id-color);
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: var(--salmon);
+}
+
+.result {
+  color: var(--teal);
+}
+
+.resultHighlight {
+  color: var(--log-entry-text-color);
+}

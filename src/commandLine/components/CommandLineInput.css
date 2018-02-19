@@ -1,4 +1,5 @@
 @import '../../styles/colors.css';
+@import '../../styles/typography.css';
 @import '../../styles/measurements.css';
 
 .wrapper {
@@ -12,15 +13,15 @@
   justify-content: center;
   align-items: center;
   flex: 0;
-  flex-basis: var(--console-left-margin);
+  flex-basis: var(--console-margin);
   font-family: var(--font-code);
   font-size: 1.125rem;
   color: var(--cmd-marker-color);
-  /* width: var(--console-left-margin); */
 }
 
 .inputWrapper {
   flex: 1;
+  margin-right: var(--console-margin);
 }
 
 .input {
@@ -30,7 +31,8 @@
   border: none;
   background: transparent;
   font-family: var(--font-code);
-  font-size: 0.75rem;
+  font-size: var(--font-code-size);
+  line-height: var(--font-code-line-height);
   color: var(--cmd-text-color);
   caret-color: var(--cmd-caret-color);
 }
