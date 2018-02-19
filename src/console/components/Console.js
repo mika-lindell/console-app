@@ -5,7 +5,7 @@ import type {Node} from 'react'
 import {observer} from 'mobx-react'
 import sandboxStore from '../../sandbox/store'
 import Sandbox from '../../sandbox/components/Sandbox'
-import CommandLine from '../../commandLine/components/CommandLine'
+import CommandLineInput from '../../commandLine/components/CommandLineInput'
 import Log from '../../log/components/Log'
 import css from './Console.css'
 
@@ -57,7 +57,7 @@ class Console extends Component {
       <div className={css.wrapper}>
         Console
         <Log />
-        <CommandLine
+        <CommandLineInput
           onChange={this.handleCommandLineChange}
           onKeyPress={this.handleCommandLineKeypress}
           value={commandLineValue}

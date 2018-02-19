@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import css from './CommandLine.css'
+import css from './CommandLineInput.css'
 
 type CommandLineProps = {
   value: string,
@@ -9,7 +9,7 @@ type CommandLineProps = {
   onKeyPress: Function
 }
 
-const CommandLine = ({value, onChange, onKeyPress}: CommandLineProps) => (
+const CommandLineInput = ({value, onChange, onKeyPress}: CommandLineProps) => (
   <div className={css.wrapper}>
     <div className={css.marker}>&gt;</div>
     <div className={css.inputWrapper}>
@@ -24,5 +24,5 @@ const CommandLine = ({value, onChange, onKeyPress}: CommandLineProps) => (
   </div>
 )
 
-CommandLine.displayName = 'CommandLine'
-export default CommandLine
+CommandLineInput.displayName = 'CommandLineInput'
+export default CommandLineInput
