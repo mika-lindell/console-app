@@ -6,13 +6,13 @@ import LogStore from '../log/store'
 // $FlowFixMe
 import type {Ref} from 'react'
 import type {LogEntry} from '../log/types'
-import type {CommandLineExpression} from '../commandLine/types'
+import type {CommandExpression} from '../commandInput/types'
 
 class sandboxStore {
   @observable evaluateJsHistory: Array<LogEntry> = []
 
   @action
-  evaluateJsSend = (payload: CommandLineExpression, sandbox: Ref<'iframe'>) => {
+  evaluateJsSend = (payload: CommandExpression, sandbox: Ref<'iframe'>) => {
     const action = {
       type: ACTIONS.evaluateJsSend,
       payload,

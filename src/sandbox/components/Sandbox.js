@@ -4,6 +4,7 @@ import React, {PureComponent} from 'react'
 import {observer} from 'mobx-react'
 import sandboxStore from '../store'
 import {ACTIONS} from '../constants'
+// $FlowFixMe
 import type {Ref} from 'react'
 
 type SandboxProps = {

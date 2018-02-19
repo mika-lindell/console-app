@@ -14,6 +14,7 @@
   --cmd-caret-color: var(--pink);
   --cmd-marker-color: var(--grey);
   --cmd-text-color: var(--grey-light);
+  --cmd-placeholder-color: var(--grey);
   --console-background-color: var(--grey-dark);
   --console-title-color: var(--grey-light);
   --log-entry-id-color: var(--grey);

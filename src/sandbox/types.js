@@ -1,11 +1,11 @@
 // @flow
 
 import type {LogEntry} from '../log/types'
-import type {CommandLineExpression} from '../commandLine/types'
+import type {CommandExpression} from '../commandInput/types'
 
 export type sandboxExpressionPayload = {
   type: string,
-  payload: CommandLineExpression
+  payload: CommandExpression
 }
 
 export type sandboxResponsePayload = {

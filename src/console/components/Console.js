@@ -5,61 +5,87 @@ import type {Node} from 'react'
 import {observer} from 'mobx-react'
 import sandboxStore from '../../sandbox/store'
 import Sandbox from '../../sandbox/components/Sandbox'
-import CommandLineInput from '../../commandLine/components/CommandLineInput'
+import CommandInput from '../../commandInput/components/CommandInput'
 import Log from '../../log/components/Log'
 import css from './Console.css'
 
 type ConsoleProps = {}
 type ConsoleState = {
-  commandLineValue: string
+  commandValue: string,
+  commandPlaceholder: string
+}
+
+const PLACEHOLDER = {
+  focus: 'Type //help for available commands',
+  blur: 'Press TAB to start',
 }
 
 @observer
 class Console extends Component {
   props: ConsoleProps
   state: ConsoleState = {
-    commandLineValue: '',
+    commandValue: '',
+    commandPlaceholder: PLACEHOLDER.blur,
   }
   sandbox: Node
-  handleButtonClick: (ev: SyntheticEvent) => void
-  handleCommandLineChange: (ev: SyntheticInputEvent) => void
-  handleCommandLineKeypress: (ev: SyntheticKeyboardEvent) => void
+  handleButtonClick: SyntheticEvent => void
+  handleCommandChange: SyntheticInputEvent => void
+  handleCommandKeypress: SyntheticKeyboardEvent => void
+  handleCommandFocus: SyntheticFocusEvent => void
+  handleCommandBlur: SyntheticFocusEvent => void
 
   constructor(props: ConsoleProps) {
     super(props)
-    this.handleCommandLineChange = this.handleCommandLineChange.bind(this)
-    this.handleCommandLineKeypress = this.handleCommandLineKeypress.bind(this)
+    this.handleCommandChange = this.handleCommandChange.bind(this)
+    this.handleCommandKeypress = this.handleCommandKeypress.bind(this)
+    this.handleCommandFocus = this.handleCommandFocus.bind(this)
+    this.handleCommandBlur = this.handleCommandBlur.bind(this)
   }
 
-  handleCommandLineChange(ev: SyntheticInputEvent) {
+  handleCommandChange(ev: SyntheticInputEvent) {
     this.setState({
-      commandLineValue: ev.target.value,
+      commandValue: ev.target.value,
     })
   }
 
-  handleCommandLineKeypress(ev: SyntheticKeyboardEvent) {
-    if (ev.key === 'Enter' && this.state.commandLineValue) {
+  handleCommandKeypress(ev: SyntheticKeyboardEvent) {
+    if (ev.key === 'Enter' && this.state.commandValue) {
       sandboxStore.evaluateJsSend(
         {
-          expression: this.state.commandLineValue,
+          expression: this.state.commandValue,
         },
         this.sandbox
       )
       this.setState({
-        commandLineValue: '',
+        commandValue: '',
       })
     }
   }
 
+  handleCommandFocus() {
+    this.setState({
+      commandPlaceholder: PLACEHOLDER.focus,
+    })
+  }
+
+  handleCommandBlur() {
+    this.setState({
+      commandPlaceholder: PLACEHOLDER.blur,
+    })
+  }
+
   render() {
-    const {commandLineValue} = this.state
+    const {commandValue, commandPlaceholder} = this.state
     return (
       <div className={css.wrapper}>
         <Log />
-        <CommandLineInput
-          onChange={this.handleCommandLineChange}
-          onKeyPress={this.handleCommandLineKeypress}
-          value={commandLineValue}
+        <CommandInput
+          value={commandValue}
+          placeholder={commandPlaceholder}
+          onChange={this.handleCommandChange}
+          onKeyPress={this.handleCommandKeypress}
+          onFocus={this.handleCommandFocus}
+          onBlur={this.handleCommandBlur}
         />
         <Sandbox iframeRef={node => (this.sandbox = node)} />
       </div>

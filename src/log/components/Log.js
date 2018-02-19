@@ -26,7 +26,8 @@ const Log = observer(({entries}: LogProps) => {
                   => <span className={css.resultHighlight}>
                     {entry.result}
                   </span>{' '}
-                  ({entry.type})
+                  {entry.type &&
+                  entry.type !== 'undefined' && <span>({entry.type})</span>}
                 </div>
               )}
               {entry.error && <div className={css.error}>{entry.error}</div>}
