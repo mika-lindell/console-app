@@ -3,31 +3,54 @@
 import React, {Component} from 'react'
 import type {Node} from 'react'
 import {observer} from 'mobx-react'
-// import css from './Hello.css'
 import sandboxStore from '../../sandbox/store'
 import Sandbox from '../../sandbox/components/Sandbox'
+import CommandLine from '../../commandLine/components/CommandLine'
 
 type ConsoleProps = {}
+type ConsoleState = {
+  commandLineValue: string
+}
 
 @observer
 class Console extends Component {
   props: ConsoleProps
+  state: ConsoleState = {
+    commandLineValue: '',
+  }
   sandbox: Node
   handleButtonClick: (ev: SyntheticEvent) => void
+  handleCommandLineChange: (ev: SyntheticInputEvent) => void
+  handleCommandLineKeypress: (ev: SyntheticKeyboardEvent) => void
 
   constructor(props: ConsoleProps) {
     super(props)
-    this.handleButtonClick = this.handleButtonClick.bind(this)
+    this.handleCommandLineChange = this.handleCommandLineChange.bind(this)
+    this.handleCommandLineKeypress = this.handleCommandLineKeypress.bind(this)
   }
 
-  handleButtonClick(ev: SyntheticEvent) {
-    const payload = {
-      expression: '1===1',
+  handleCommandLineChange(ev: SyntheticInputEvent) {
+    this.setState({
+      commandLineValue: ev.target.value,
+    })
+  }
+
+  handleCommandLineKeypress(ev: SyntheticKeyboardEvent) {
+    if (ev.key === 'Enter' && this.state.commandLineValue) {
+      sandboxStore.evaluateJsSend(
+        {
+          expression: this.state.commandLineValue,
+        },
+        this.sandbox
+      )
+      this.setState({
+        commandLineValue: '',
+      })
     }
-    sandboxStore.evaluateJsSend(payload, this.sandbox)
   }
 
   render() {
+    const {commandLineValue} = this.state
     return (
       <div>
         Console{' '}
@@ -36,7 +59,11 @@ class Console extends Component {
         ) : (
           'fail'
         )}
-        <button onClick={this.handleButtonClick}>Evaluate 1===1</button>
+        <CommandLine
+          onChange={this.handleCommandLineChange}
+          onKeyPress={this.handleCommandLineKeypress}
+          value={commandLineValue}
+        />
         <Sandbox iframeRef={node => (this.sandbox = node)} />
       </div>
     )

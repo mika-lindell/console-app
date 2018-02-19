@@ -5,16 +5,17 @@ window.addEventListener('message', function(ev: MessageEvent) {
   console.log('Sandbox received an action:', ev.data)
   // $FlowFixMe
   const {type, payload} = ev.data
+  let result = undefined
+  let error = undefined
+
   switch (type) {
     case ACTIONS.evaluateJsSend:
-      let result = undefined
-      let error = undefined
+      // Declarations not wrapped in scope should be global scope
+      const parsedExpression = payload.expression
+        ? payload.expression.trim().replace(/^const |let |var /g, '')
+        : payload.expression
 
       try {
-        // Declarations not wrapped in scope should be global scope
-        const parsedExpression = payload.expression
-          .trim()
-          .replace(/^const |let |var /g, '')
         // eslint-disable-next-line no-eval
         result = window.eval(parsedExpression)
       } catch (err) {
@@ -24,7 +25,7 @@ window.addEventListener('message', function(ev: MessageEvent) {
       const response = {
         type: ACTIONS.evaluateJsResponse,
         payload: {
-          result: result.toString(),
+          result: String(result),
           type: typeof result,
           error,
         },
@@ -32,7 +33,19 @@ window.addEventListener('message', function(ev: MessageEvent) {
       ev.source.postMessage(response, ev.origin)
       console.log('Sandbox sent an action:', response)
       break
+    // Handle cases where action is of unknown type
     default:
-    // TODO add switch default handler and deal with invalid action
+      const actionErrorMessage = `Sandbox didn't recognize action '${type}':`
+      console.error(actionErrorMessage, ':', ev.data)
+      // Send error message as response
+      const actionErrorResponse = {
+        type: ACTIONS.evaluateJsResponse,
+        payload: {
+          result: String(result),
+          type: typeof result,
+          error: actionErrorMessage,
+        },
+      }
+      ev.source.postMessage(actionErrorResponse, ev.origin)
   }
 })
