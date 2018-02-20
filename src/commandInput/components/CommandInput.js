@@ -8,6 +8,7 @@ type CommandInputProps = {
   placeholder: string,
   onChange: SyntheticInputEvent => void,
   onKeyPress: SyntheticKeyboardEvent => void,
+  onKeyDown: SyntheticKeyboardEvent => void,
   onFocus: SyntheticFocusEvent => void,
   onBlur: SyntheticFocusEvent => void
 }
@@ -17,6 +18,7 @@ const CommandInput = ({
   placeholder,
   onChange,
   onKeyPress,
+  onKeyDown,
   onFocus,
   onBlur,
 }: CommandInputProps) => (
@@ -29,9 +31,14 @@ const CommandInput = ({
         placeholder={placeholder}
         onChange={onChange}
         onKeyPress={onKeyPress}
+        onKeyDown={onKeyDown}
         onFocus={onFocus}
         onBlur={onBlur}
         autoFocus
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck="false"
       />
     </div>
   </div>

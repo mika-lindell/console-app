@@ -7,12 +7,14 @@ import sandboxStore from '../../sandbox/store'
 import Sandbox from '../../sandbox/components/Sandbox'
 import CommandInput from '../../commandInput/components/CommandInput'
 import Log from '../../log/components/Log'
+import LogStore from '../../log/store'
 import css from './Console.css'
 
 type ConsoleProps = {}
 type ConsoleState = {
   commandValue: string,
-  commandPlaceholder: string
+  commandPlaceholder: string,
+  commandHistoryIndex: number
 }
 
 const PLACEHOLDER = {
@@ -26,11 +28,13 @@ class Console extends Component {
   state: ConsoleState = {
     commandValue: '',
     commandPlaceholder: PLACEHOLDER.blur,
+    commandHistoryIndex: -1,
   }
   sandbox: Node
   handleButtonClick: SyntheticEvent => void
   handleCommandChange: SyntheticInputEvent => void
   handleCommandKeypress: SyntheticKeyboardEvent => void
+  handleCommandKeydown: SyntheticKeyboardEvent => void
   handleCommandFocus: SyntheticFocusEvent => void
   handleCommandBlur: SyntheticFocusEvent => void
 
@@ -38,6 +42,7 @@ class Console extends Component {
     super(props)
     this.handleCommandChange = this.handleCommandChange.bind(this)
     this.handleCommandKeypress = this.handleCommandKeypress.bind(this)
+    this.handleCommandKeydown = this.handleCommandKeydown.bind(this)
     this.handleCommandFocus = this.handleCommandFocus.bind(this)
     this.handleCommandBlur = this.handleCommandBlur.bind(this)
   }
@@ -45,6 +50,7 @@ class Console extends Component {
   handleCommandChange(ev: SyntheticInputEvent) {
     this.setState({
       commandValue: ev.target.value,
+      commandHistoryIndex: -1,
     })
   }
 
@@ -58,6 +64,43 @@ class Console extends Component {
       )
       this.setState({
         commandValue: '',
+        commandHistoryIndex: -1,
+      })
+    }
+  }
+
+  handleCommandKeydown(ev: SyntheticKeyboardEvent) {
+    const arrowUpActive = ev.key === 'ArrowUp'
+    const arrowDownActive = ev.key === 'ArrowDown'
+
+    if (arrowUpActive || arrowDownActive) {
+      const {commandHistoryIndex} = this.state
+      const commandHistoryLastIndex = LogStore.entries.length - 1
+      let nextCommandHistoryIndex = -1
+
+      // Add one to current history index if upArrow is down
+      if (arrowUpActive) {
+        nextCommandHistoryIndex = commandHistoryIndex + 1
+      }
+      // Substract one from current history index if downArrow is down
+      if (arrowDownActive) {
+        nextCommandHistoryIndex = commandHistoryIndex - 1
+      }
+      // Make sure we wont go below -1, which equals no value from history
+      // should be displayed
+      if (nextCommandHistoryIndex === -2) {
+        nextCommandHistoryIndex = -1
+      }
+      // Make sure we won't go above last item in history
+      if (nextCommandHistoryIndex === commandHistoryLastIndex + 1) {
+        nextCommandHistoryIndex = commandHistoryLastIndex
+      }
+      this.setState({
+        commandValue:
+          nextCommandHistoryIndex === -1
+            ? ''
+            : LogStore.entries[nextCommandHistoryIndex].expression,
+        commandHistoryIndex: nextCommandHistoryIndex,
       })
     }
   }
@@ -84,6 +127,7 @@ class Console extends Component {
           placeholder={commandPlaceholder}
           onChange={this.handleCommandChange}
           onKeyPress={this.handleCommandKeypress}
+          onKeyDown={this.handleCommandKeydown}
           onFocus={this.handleCommandFocus}
           onBlur={this.handleCommandBlur}
         />
