@@ -13,6 +13,10 @@ type CommandInputProps = {
   onBlur: SyntheticFocusEvent => void
 }
 
+/** TODO
+  Change this into stateful component and give it separate command history which won't have duplicates of same items
+*/
+
 const CommandInput = ({
   value,
   placeholder,

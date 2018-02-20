@@ -9,6 +9,17 @@ type LogProps = {
   entries: Array<any>
 }
 
+/** TODO
+  Make this into stateful component
+  and add this to componentDidUpdate:
+
+  window.scroll({
+    top: document.body.clientHeight,
+    left: 0,
+    behavior: 'smooth',
+  })
+  
+*/
 const Log = observer(({entries}: LogProps) => {
   return (
     <ul className={css.entries}>

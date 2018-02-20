@@ -1,27 +1,19 @@
-:root {
-  --teal: #4db6ac;
-  --grey: #616161;
-  --grey-dark: #212121;
-  --grey-light: #eee;
-  --ocean-light: #4fc3f7;
-  --pink: #f06292;
-  --salmon: #e57373;
+@import './colors.css';
+
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-:root {
-  --body-background-color: var(--ocean-light);
-  --cmd-background-color: var(--grey-dark);
-  --cmd-border-color: var(--grey);
-  --cmd-caret-color: var(--pink);
-  --cmd-marker-color: var(--grey);
-  --cmd-text-color: var(--grey-light);
-  --cmd-placeholder-color: var(--grey);
-  --console-background-color: var(--grey-dark);
-  --console-title-color: var(--grey-light);
-  --log-entry-id-color: var(--grey);
-  --log-entry-text-color: var(--grey-light);
-  --log-border-color: var(--grey);
-  --scrollbar-track-color: var(--grey-dark);
-  --scrollbar-thumb-color: var(--grey);
-  --scrollbar-border-color: var(--grey);
+::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:active {
+  background-color: var(--scrollbar-thumb-active-color);
 }

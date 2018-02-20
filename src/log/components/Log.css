@@ -15,13 +15,12 @@
 }
 
 .title {
-  margin: 0 var(--console-margin);
+  margin: 1rem var(--console-margin);
   font-family: var(--font-code);
   font-size: 3.75rem;
   font-weight: var(--font-code-weight-normal);
   line-height: 1.2;
   color: var(--console-title-color);
-  margin-bottom: 1rem;
 }
 
 .entry {
