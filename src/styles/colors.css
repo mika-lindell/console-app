@@ -1,19 +1,29 @@
-@import './colors.css';
-
-::-webkit-scrollbar {
-  width: 10px;
+:root {
+  --teal: rgba(77, 182, 172, 1);
+  --grey: rgba(97, 97, 97, 1);
+  --grey-a-5: rgba(97, 97, 97, 0.5);
+  --grey-dark: rgba(33, 33, 33, 1);
+  --grey-x-dark: rgba(28, 28, 28, 1);
+  --grey-light: rgba(238, 238, 238, 1);
+  --ocean-light: rgba(79, 195, 247, 1);
+  --pink: rgba(240, 98, 146, 1);
+  --salmon: rgba(229, 115, 115, 1);
 }
 
-::-webkit-scrollbar-track {
-  background-color: var(--scrollbar-track-color);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb-color);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover,
-::-webkit-scrollbar-thumb:active {
-  background-color: var(--scrollbar-thumb-active-color);
+:root {
+  --body-background-color: var(--grey-x-dark);
+  --cmd-background-color: var(--grey-dark);
+  --cmd-border-color: var(--grey);
+  --cmd-caret-color: var(--pink);
+  --cmd-marker-color: var(--grey);
+  --cmd-text-color: var(--grey-light);
+  --cmd-placeholder-color: var(--grey);
+  --console-background-color: var(--grey-dark);
+  --console-title-color: var(--grey-light);
+  --log-entry-id-color: var(--grey);
+  --log-entry-text-color: var(--grey-light);
+  --log-border-color: var(--grey);
+  --scrollbar-track-color: var(--grey-x-dark);
+  --scrollbar-thumb-color: var(--grey-a-5);
+  --scrollbar-thumb-active-color: var(--grey);
 }
