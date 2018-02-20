@@ -10,6 +10,8 @@
   flex-direction: column;
   justify-content: flex-end;
   list-style-type: none;
+  max-width: 1000px;
+  border-right: 1px solid var(--log-border-color);
 }
 
 .title {
@@ -39,6 +41,7 @@
   align-items: flex-start;
   flex: 0;
   flex-basis: var(--console-margin);
+  min-width: calc(var(--console-margin));
   padding-top: 0.14rem;
   font-family: var(--font-code);
   font-size: 0.7rem;

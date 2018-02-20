@@ -2,13 +2,14 @@
   --teal: #4db6ac;
   --grey: #616161;
   --grey-dark: #212121;
-  --grey-light: #eeeeee;
+  --grey-light: #eee;
   --ocean-light: #4fc3f7;
   --pink: #f06292;
   --salmon: #e57373;
 }
 
 :root {
+  --body-background-color: var(--ocean-light);
   --cmd-background-color: var(--grey-dark);
   --cmd-border-color: var(--grey);
   --cmd-caret-color: var(--pink);
@@ -19,4 +20,8 @@
   --console-title-color: var(--grey-light);
   --log-entry-id-color: var(--grey);
   --log-entry-text-color: var(--grey-light);
+  --log-border-color: var(--grey);
+  --scrollbar-track-color: var(--grey-dark);
+  --scrollbar-thumb-color: var(--grey);
+  --scrollbar-border-color: var(--grey);
 }
