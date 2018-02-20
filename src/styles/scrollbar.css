@@ -1,11 +1,15 @@
+@import './colors.css';
+
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 15px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track-color);
+  border-left: 1px solid var(--log-border-color);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: red;
-}
-
-::-webkit-scrollbar {
-  width: 5px;
+  background-color: var(--scrollbar-thumb-color);
+  border-radius: 15px;
 }
