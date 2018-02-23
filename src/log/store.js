@@ -8,9 +8,9 @@ class LogStore {
 
   @action
   addEntry = (entry: LogEntry) => {
-    const emptyHistory = this.entries.length === 0
+    const noEntries = this.entries.length === 0
     const lastIndex = this.entries.length - 1
-    const nextId = emptyHistory ? 0 : this.entries[lastIndex].id + 1
+    const nextId = noEntries ? 0 : this.entries[lastIndex].id + 1
     const newItem = {
       id: nextId,
       ...entry,

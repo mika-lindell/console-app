@@ -3,8 +3,9 @@
 import React, {Component} from 'react'
 import type {Node} from 'react'
 import {observer} from 'mobx-react'
-import sandboxStore from '../../sandbox/store'
+import SandboxStore from '../../sandbox/store'
 import Sandbox from '../../sandbox/components/Sandbox'
+import CommandStore from '../../commandInput/store'
 import CommandInput from '../../commandInput/components/CommandInput'
 import Log from '../../log/components/Log'
 import LogStore from '../../log/store'
@@ -56,7 +57,7 @@ class Console extends Component {
 
   handleCommandKeypress(ev: SyntheticKeyboardEvent) {
     if (ev.key === 'Enter' && this.state.commandValue) {
-      sandboxStore.evaluateJsSend(
+      SandboxStore.evaluateJsSend(
         {
           expression: this.state.commandValue,
         },
@@ -99,7 +100,7 @@ class Console extends Component {
         commandValue:
           nextCommandHistoryIndex === -1
             ? ''
-            : LogStore.entries[nextCommandHistoryIndex].expression,
+            : CommandStore.history[nextCommandHistoryIndex].expression,
         commandHistoryIndex: nextCommandHistoryIndex,
       })
     }

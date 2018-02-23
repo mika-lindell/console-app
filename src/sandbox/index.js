@@ -1,4 +1,6 @@
 // @flow
+// This is the script which will execute in sandbox
+// It's embedded as an iframe and will communicate with our app via postMessage
 
 import {ACTIONS} from './constants'
 
