@@ -3,11 +3,11 @@
 import {observable, action} from 'mobx'
 import {ACTIONS} from './constants'
 import LogStore from '../log/store'
-import CommandStore from '../commandInput/store'
+import CommandStore from '../command/store'
 // $FlowFixMe
 import type {Ref} from 'react'
 import type {LogEntry} from '../log/types'
-import type {CommandExpression} from '../commandInput/types'
+import type {CommandExpression} from '../command/types'
 
 class SandboxStore {
   @observable evaluateJsHistory: Array<LogEntry> = []
