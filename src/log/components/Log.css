@@ -69,7 +69,7 @@
   margin: 0;
 }
 
-.html code {
+code {
   border: none !important;
   white-space: pre-wrap !important;
   background-color: transparent !important;

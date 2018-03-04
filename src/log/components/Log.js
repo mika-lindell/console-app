@@ -36,7 +36,11 @@ const Log = observer(({entries}: LogProps) => {
           <li className={css.entry} key={entry.id}>
             <div className={css.id}>{entry.id + 1}</div>
             <div className={css.dataWrapper}>
-              <div className={css.expression}>{entry.expression}</div>
+              <div className={css.expression}>
+                <PrismCode className="language-javascript">
+                  {entry.expression}
+                </PrismCode>
+              </div>
               <div className={css.data}>
                 <div className={css.pointer}>=> </div>
                 <div className={css.result}>
@@ -49,7 +53,11 @@ const Log = observer(({entries}: LogProps) => {
                           </PrismCode>
                         </span>
                       )}
-                      {!entry.html && <samp>{entry.text}</samp>}
+                      {!entry.html && (
+                        <PrismCode className="language-javascript">
+                          {entry.text}
+                        </PrismCode>
+                      )}
                       {showType && (
                         <span className={css.type}>
                           {' '}
