@@ -5,6 +5,25 @@
 import {ACTIONS} from './constants'
 import util from 'util'
 
+// Just to be on the safe side we don't use conditions to check type
+function getTypeName(subject: any): ?string {
+  try {
+    return typeof subject
+  } catch (err) {
+    return undefined
+  }
+}
+
+// Because some typeof-checks return undefined, though they exist...
+// typeof document.all === 'undefined' for example
+function getInstanceName(subject: any): ?string {
+  try {
+    return subject.constructor.name
+  } catch (err) {
+    return undefined
+  }
+}
+
 window.addEventListener('message', function(ev: MessageEvent) {
   console.log('Sandbox received an action:', ev.data)
   // $FlowFixMe
@@ -25,14 +44,15 @@ window.addEventListener('message', function(ev: MessageEvent) {
       } catch (err) {
         error = err.toString()
       }
+
       // Send the result back
       const response = {
         type: ACTIONS.evaluateJsResponse,
         payload: {
           expression: payload.expression,
           result: util.inspect(result),
-          type: typeof result,
-          instance: result ? result.constructor.name : undefined,
+          type: getTypeName(result),
+          instance: getInstanceName(result),
           error,
         },
       }

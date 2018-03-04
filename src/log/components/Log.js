@@ -40,15 +40,17 @@ const Log = observer(({entries}: LogProps) => {
                   </span>{' '}
                   {showType && (
                     <span>
-                      (
-                      {entry.instance !== 'undefined' && (
+                      [
+                      {entry.type !== 'undefined' && (
                         <span>
-                          {entry.instance}
-                          {entry.type && ', '}
+                          {entry.type}
+                          {entry.instance && ' '}
                         </span>
                       )}
-                      {entry.type !== 'undefined' && <span>{entry.type}</span>}
-                      )
+                      {entry.instance !== 'undefined' && (
+                        <span>{entry.instance}</span>
+                      )}
+                      ]
                     </span>
                   )}
                 </div>
