@@ -47,7 +47,22 @@
   color: var(--log-entry-id-color);
 }
 
+.dataWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .data {
+  display: flex;
+  flex-direction: row;
+}
+
+.pointer {
+  padding-right: 0.5rem;
+  color: var(--teal);
+}
+
+.result {
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -58,9 +73,9 @@
 }
 
 .text {
-  color: var(--teal);
+  color: var(--log-entry-text-color);
 }
 
-.textHighlight {
-  color: var(--log-entry-text-color);
+.type {
+  color: var(--log-entry-type-color);
 }

@@ -31,33 +31,43 @@ const Log = observer(({entries}: LogProps) => {
         return (
           <li className={css.entry} key={entry.id}>
             <div className={css.id}>{entry.id + 1}</div>
-            <pre className={css.data}>
+            <div className={css.dataWrapper}>
               <div className={css.expression}>{entry.expression}</div>
-              {!entry.error && (
-                <div className={css.text}>
-                  =>{' '}
-                  <span className={css.textHighlight}>
-                    {entry.html || entry.text}
-                  </span>{' '}
-                  {showType && (
-                    <span>
-                      [
-                      {entry.type !== 'undefined' && (
-                        <span>
-                          {entry.type}
-                          {entry.instance && ' '}
+              <div className={css.data}>
+                <div className={css.pointer}>=> </div>
+                <pre className={css.result}>
+                  {!entry.error && (
+                    <div className={css.text}>
+                      {entry.html && (
+                        <code className="language-javascript">
+                          {entry.html}
+                        </code>
+                      )}
+                      {!entry.html && <samp>{entry.text}</samp>}
+                      {showType && (
+                        <span className={css.type}>
+                          {' '}
+                          [
+                          {entry.type !== 'undefined' && (
+                            <span>
+                              {entry.type}
+                              {entry.instance && ' '}
+                            </span>
+                          )}
+                          {entry.instance !== 'undefined' && (
+                            <span>{entry.instance}</span>
+                          )}
+                          ]
                         </span>
                       )}
-                      {entry.instance !== 'undefined' && (
-                        <span>{entry.instance}</span>
-                      )}
-                      ]
-                    </span>
+                    </div>
                   )}
-                </div>
-              )}
-              {entry.error && <div className={css.error}>{entry.error}</div>}
-            </pre>
+                  {entry.error && (
+                    <div className={css.error}>{entry.error}</div>
+                  )}
+                </pre>
+              </div>
+            </div>
           </li>
         )
       })}

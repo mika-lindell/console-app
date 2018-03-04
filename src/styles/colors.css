@@ -20,9 +20,10 @@
   --cmd-placeholder-color: var(--grey);
   --console-background-color: var(--grey-dark);
   --console-title-color: var(--grey-light);
+  --log-border-color: var(--grey);
   --log-entry-id-color: var(--grey);
   --log-entry-text-color: var(--grey-light);
-  --log-border-color: var(--grey);
+  --log-entry-type-color: var(--teal);
   --scrollbar-track-color: var(--grey-x-dark);
   --scrollbar-thumb-color: var(--grey-a-5);
   --scrollbar-thumb-active-color: var(--grey);
