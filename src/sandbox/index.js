@@ -24,6 +24,24 @@ function getInstanceName(subject: any): ?string {
   }
 }
 
+function getElementAsString(element: ?HTMLElement | ?Document): ?string {
+  const isDocument = element instanceof HTMLDocument
+  // const isDocumentElement = element instanceof HTMLHtmlElement
+  const isAnyElement = element instanceof HTMLElement
+  // It's HTML document
+  if (isDocument) {
+    return `${new XMLSerializer().serializeToString(
+      element.doctype
+    )}\r\n${element.documentElement.outerHTML}`
+  }
+  // It's any other HTML element
+  if (isAnyElement) {
+    return element.outerHTML
+  }
+  // Not HTML element object
+  return undefined
+}
+
 window.addEventListener('message', function(ev: MessageEvent) {
   console.log('Sandbox received an action:', ev.data)
   // $FlowFixMe
@@ -45,12 +63,13 @@ window.addEventListener('message', function(ev: MessageEvent) {
         error = err.toString()
       }
 
-      // Send the result back
+      // Send back eval results
       const response = {
         type: ACTIONS.evaluateJsResponse,
         payload: {
           expression: payload.expression,
-          result: util.inspect(result),
+          text: util.inspect(result),
+          html: getElementAsString(result),
           type: getTypeName(result),
           instance: getInstanceName(result),
           error,

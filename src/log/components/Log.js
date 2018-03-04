@@ -34,9 +34,10 @@ const Log = observer(({entries}: LogProps) => {
             <pre className={css.data}>
               <div className={css.expression}>{entry.expression}</div>
               {!entry.error && (
-                <div className={css.result}>
-                  => <span className={css.resultHighlight}>
-                    {entry.result}
+                <div className={css.text}>
+                  =>{' '}
+                  <span className={css.textHighlight}>
+                    {entry.html || entry.text}
                   </span>{' '}
                   {showType && (
                     <span>

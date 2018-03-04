@@ -57,10 +57,10 @@
   color: var(--salmon);
 }
 
-.result {
+.text {
   color: var(--teal);
 }
 
-.resultHighlight {
+.textHighlight {
   color: var(--log-entry-text-color);
 }
