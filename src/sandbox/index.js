@@ -3,6 +3,7 @@
 // It's embedded as an iframe and will communicate with our app via postMessage
 
 import {ACTIONS} from './constants'
+import util from 'util'
 
 window.addEventListener('message', function(ev: MessageEvent) {
   console.log('Sandbox received an action:', ev.data)
@@ -29,8 +30,9 @@ window.addEventListener('message', function(ev: MessageEvent) {
         type: ACTIONS.evaluateJsResponse,
         payload: {
           expression: payload.expression,
-          result: String(result),
+          result: util.inspect(result),
           type: typeof result,
+          instance: result ? result.constructor.name : undefined,
           error,
         },
       }

@@ -5,5 +5,6 @@ export type LogEntry = {
   expression: string,
   result: string,
   type: string,
+  instance: string,
   error: ?string
 }

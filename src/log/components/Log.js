@@ -18,7 +18,7 @@ type LogProps = {
     left: 0,
     behavior: 'smooth',
   })
-  
+
 */
 const Log = observer(({entries}: LogProps) => {
   return (
@@ -27,22 +27,34 @@ const Log = observer(({entries}: LogProps) => {
         <h1 className={css.title}>Console</h1>
       </li>
       {LogStore.entries.map((entry, index) => {
+        const showType = entry.type || entry.instance
         return (
           <li className={css.entry} key={entry.id}>
             <div className={css.id}>{entry.id + 1}</div>
-            <div className={css.data}>
+            <pre className={css.data}>
               <div className={css.expression}>{entry.expression}</div>
               {!entry.error && (
                 <div className={css.result}>
                   => <span className={css.resultHighlight}>
                     {entry.result}
                   </span>{' '}
-                  {entry.type &&
-                  entry.type !== 'undefined' && <span>({entry.type})</span>}
+                  {showType && (
+                    <span>
+                      (
+                      {entry.instance !== 'undefined' && (
+                        <span>
+                          {entry.instance}
+                          {entry.type && ', '}
+                        </span>
+                      )}
+                      {entry.type !== 'undefined' && <span>{entry.type}</span>}
+                      )
+                    </span>
+                  )}
                 </div>
               )}
               {entry.error && <div className={css.error}>{entry.error}</div>}
-            </div>
+            </pre>
           </li>
         )
       })}
