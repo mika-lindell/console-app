@@ -2,8 +2,12 @@
 
 import React from 'react'
 import {observer} from 'mobx-react'
+import PrismCode from 'react-prism'
 import LogStore from '../store'
 import css from './Log.css'
+
+require('prismjs')
+require('prismjs/themes/prism-twilight.css')
 
 type LogProps = {
   entries: Array<any>
@@ -35,13 +39,15 @@ const Log = observer(({entries}: LogProps) => {
               <div className={css.expression}>{entry.expression}</div>
               <div className={css.data}>
                 <div className={css.pointer}>=> </div>
-                <pre className={css.result}>
+                <div className={css.result}>
                   {!entry.error && (
                     <div className={css.text}>
                       {entry.html && (
-                        <code className="language-javascript">
-                          {entry.html}
-                        </code>
+                        <span className={css.html}>
+                          <PrismCode className="language-html">
+                            {entry.html}
+                          </PrismCode>
+                        </span>
                       )}
                       {!entry.html && <samp>{entry.text}</samp>}
                       {showType && (
@@ -65,7 +71,7 @@ const Log = observer(({entries}: LogProps) => {
                   {entry.error && (
                     <div className={css.error}>{entry.error}</div>
                   )}
-                </pre>
+                </div>
               </div>
             </div>
           </li>

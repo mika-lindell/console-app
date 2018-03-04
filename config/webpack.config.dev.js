@@ -165,6 +165,20 @@ module.exports = {
               cacheDirectory: true,
             },
           },
+          // To load prismjs without any css-modules interference
+          {
+            test: /\.css$/,
+            include: [/prismjs/],
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  modules: false,
+                },
+              },
+            ],
+          },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
           // "style" loader turns CSS into JS modules that inject <style> tags.
@@ -172,6 +186,7 @@ module.exports = {
           // in development "style" loader enables hot editing of CSS.
           {
             test: /\.css$/,
+            exclude: [/prismjs/],
             use: [
               require.resolve('style-loader'),
               {
