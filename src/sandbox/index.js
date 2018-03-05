@@ -2,9 +2,9 @@
 // This is the script which will execute in sandbox
 // It's embedded as an iframe and will communicate with our app via postMessage
 
-import {ACTIONS} from './constants'
 import {pretty} from 'js-object-pretty-print'
-// import util from 'util'
+import isArrayLikeObject from 'lodash/isArrayLikeObject'
+import {ACTIONS} from './constants'
 
 // TODO: Move to utils
 // Just to be on the safe side we don't use conditions to check type
@@ -28,6 +28,7 @@ function getInstanceName(subject: any): ?string {
 }
 
 // TODO: Move to utils
+// Parse HTML Dom object to string
 function getElementAsString(element: ?HTMLElement | ?Document): ?string {
   const isDocument = element instanceof HTMLDocument
   // const isDocumentElement = element instanceof HTMLHtmlElement
@@ -46,6 +47,17 @@ function getElementAsString(element: ?HTMLElement | ?Document): ?string {
   return undefined
 }
 
+// TODO: Move to utils
+// Parse anything Javascript to string
+function getAnythingAsString(result: any): string {
+  // If some people writing js libraries could just actually throw an error
+  // When you have an error we could use try/catch ...
+  if (isArrayLikeObject(result)) {
+    return pretty(result)
+  }
+  return JSON.stringify(result, null, 2)
+}
+
 window.addEventListener('message', function(ev: MessageEvent) {
   console.log('Sandbox received an action:', ev.data)
   // $FlowFixMe
@@ -62,7 +74,7 @@ window.addEventListener('message', function(ev: MessageEvent) {
 
       try {
         // eslint-disable-next-line no-eval
-        result = window.eval(`(${parsedExpression})`)
+        result = window.eval(parsedExpression)
       } catch (err) {
         error = err.toString()
       }
@@ -72,7 +84,7 @@ window.addEventListener('message', function(ev: MessageEvent) {
         type: ACTIONS.evaluateJsResponse,
         payload: {
           expression: payload.expression,
-          text: pretty(result),
+          text: getAnythingAsString(result),
           html: getElementAsString(result),
           type: getTypeName(result),
           instance: getInstanceName(result),

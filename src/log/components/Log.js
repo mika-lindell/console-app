@@ -129,12 +129,10 @@ class Log extends PureComponent {
                           <span className={css.type}>
                             {' '}
                             [
-                            {entry.type !== 'undefined' && (
-                              <span>
-                                {entry.type}
-                                {entry.instance && ' '}
-                              </span>
-                            )}
+                            <span>
+                              {entry.type}
+                              {entry.instance && ' '}
+                            </span>
                             {entry.instance !== 'undefined' && (
                               <span>{entry.instance}</span>
                             )}
