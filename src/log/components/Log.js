@@ -7,7 +7,7 @@ import LogStore from '../store'
 import css from './Log.css'
 
 require('prismjs')
-require('prismjs/themes/prism-twilight.css')
+// require('prismjs/themes/prism-twilight.css')
 
 type LogProps = {
   entries: Array<any>

@@ -1,0 +1,9 @@
+:root {
+  --syntax-secondary: #777777;
+  --syntax-primary: #CF6A4C;
+  --syntax-var-type: #F9EE98;
+  --syntax-attr: #8F9D6A;
+  --syntax-atrule: #7587A6;
+  --syntax-important: #E9C062;
+  --syntax-regex: #E9C062;
+}
