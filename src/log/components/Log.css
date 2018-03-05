@@ -102,6 +102,10 @@
   white-space: pre-wrap;
 }
 
+:global(.language-javascript) {
+  white-space: pre-wrap;
+}
+
 /* Secondary elements */
 
 :global(.token.comment) {

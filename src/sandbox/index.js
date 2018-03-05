@@ -3,7 +3,8 @@
 // It's embedded as an iframe and will communicate with our app via postMessage
 
 import {ACTIONS} from './constants'
-import util from 'util'
+import {pretty} from 'js-object-pretty-print'
+// import util from 'util'
 
 // Just to be on the safe side we don't use conditions to check type
 function getTypeName(subject: any): ?string {
@@ -58,7 +59,7 @@ window.addEventListener('message', function(ev: MessageEvent) {
 
       try {
         // eslint-disable-next-line no-eval
-        result = window.eval(parsedExpression)
+        result = window.eval(`(${parsedExpression})`)
       } catch (err) {
         error = err.toString()
       }
@@ -68,7 +69,7 @@ window.addEventListener('message', function(ev: MessageEvent) {
         type: ACTIONS.evaluateJsResponse,
         payload: {
           expression: payload.expression,
-          text: util.inspect(result),
+          text: pretty(result),
           html: getElementAsString(result),
           type: getTypeName(result),
           instance: getInstanceName(result),
