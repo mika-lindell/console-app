@@ -45,12 +45,20 @@ class Log extends PureComponent {
 
   componentWillMount() {
     /* eslint-disable */
-    // $FlowIgnore
+    /* $FlowIgnore */
     if (chrome) {
       // $FlowIgnore
       chrome.system.memory.getInfo(this.updateMemory)
     }
     /* eslint-enable */
+  }
+
+  componentDidUpdate() {
+    window.scroll({
+      top: document.body.clientHeight,
+      left: 0,
+      behavior: 'smooth',
+    })
   }
 
   updateMemory(result: ChromeMemoryResult) {

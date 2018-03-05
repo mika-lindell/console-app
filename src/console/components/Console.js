@@ -73,6 +73,7 @@ class Console extends Component {
   handleCommandKeydown(ev: SyntheticKeyboardEvent) {
     const arrowUpActive = ev.key === 'ArrowUp'
     const arrowDownActive = ev.key === 'ArrowDown'
+    const input = ev.target
 
     if (arrowUpActive || arrowDownActive) {
       const {commandHistoryIndex} = this.state
@@ -96,13 +97,26 @@ class Console extends Component {
       if (nextCommandHistoryIndex === commandHistoryLastIndex + 1) {
         nextCommandHistoryIndex = commandHistoryLastIndex
       }
-      this.setState({
-        commandValue:
-          nextCommandHistoryIndex === -1
-            ? ''
-            : CommandStore.history[nextCommandHistoryIndex].expression,
-        commandHistoryIndex: nextCommandHistoryIndex,
-      })
+
+      const nextCommandValue =
+        nextCommandHistoryIndex === -1
+          ? ''
+          : CommandStore.history[nextCommandHistoryIndex].expression
+
+      this.setState(
+        {
+          commandValue: nextCommandValue,
+          commandHistoryIndex: nextCommandHistoryIndex,
+        },
+        () =>
+          setTimeout(() => {
+            // Set caret after last char in input
+            // when command history changes its value
+            // TODO Actual solution without setTimeout
+            input.selectionStart = nextCommandValue.length
+            input.selectionEnd = nextCommandValue.length
+          }, 0)
+      )
     }
   }
 
