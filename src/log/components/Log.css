@@ -1,9 +1,229 @@
-:root {
-  --syntax-secondary: #777;
-  --syntax-primary: #cf6a4c;
-  --syntax-var-type: #f9ee98;
-  --syntax-attr: #8f9d6a;
-  --syntax-atrule: #7587a6;
-  --syntax-important: #e9c062;
-  --syntax-regex: #e9c062;
+@import '../../styles/colors.css';
+@import '../../styles/typography.css';
+@import '../../styles/measurements.css';
+@import '../../styles/syntax.css';
+
+.entries {
+  margin: 0;
+  margin-bottom: var(--cmd-bar-height);
+  padding: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  list-style-type: none;
+  max-width: 1000px;
+  border-right: 1px solid var(--log-border-color);
+}
+
+.title {
+  margin: 1rem var(--console-margin);
+  font-family: var(--font-code);
+  font-size: 3.75rem;
+  font-weight: var(--font-code-weight-normal);
+  line-height: 1.2;
+  color: var(--console-title-color);
+}
+
+.entry {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem 0;
+  padding-right: var(--console-margin);
+  font-family: var(--font-code);
+  font-size: var(--font-code-size);
+  line-height: var(--font-code-line-height);
+  color: var(--log-entry-text-color);
+}
+
+.id {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 0;
+  flex-basis: var(--console-margin);
+  min-width: calc(var(--console-margin));
+  padding-top: 0.14rem;
+  font-family: var(--font-code);
+  font-size: 0.7rem;
+  color: var(--log-entry-id-color);
+  user-select: none;
+}
+
+.dataWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.data {
+  display: flex;
+  flex-direction: row;
+}
+
+.pointer {
+  padding-right: 0.5rem;
+  color: var(--teal);
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* code {
+  border: none !important;
+  white-space: pre-wrap !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  font-family: var(--font-code) !important;
+} */
+
+.error {
+  color: var(--salmon);
+}
+
+.text {
+  color: var(--log-entry-text-color);
+}
+
+.type {
+  color: var(--log-entry-type-color);
+}
+
+/*
+  Syntax highlighting styles
+  Based on PrismJs Twilight-theme
+  https://github.com/PrismJS/prism/blob/gh-pages/themes/prism-twilight.css
+*/
+
+:global(.language-html) {
+  white-space: pre-wrap;
+}
+
+/* Secondary elements */
+
+:global(.token.comment) {
+  color: var(--syntax-secondary);
+}
+
+:global(.token.prolog) {
+  color: var(--syntax-secondary);
+}
+
+:global(.token.doctype) {
+  color: var(--syntax-secondary);
+}
+
+:global(.token.cdata) {
+  color: var(--syntax-secondary);
+}
+
+:global(.token.punctuation) {
+  opacity: 0.7;
+}
+
+:global(.namespace) {
+  opacity: 0.7;
+}
+
+/* Primary elements */
+
+:global(.token.tag) {
+  color: var(--syntax-primary);
+}
+
+:global(.token.boolean) {
+  color: var(--syntax-primary);
+}
+
+:global(.token.number) {
+  color: var(--syntax-primary);
+}
+
+:global(.token.deleted) {
+  color: var(--syntax-primary);
+}
+
+/* Variable types */
+
+:global(.token.keyword) {
+  color: var(--syntax-var-type);
+}
+
+:global(.token.property) {
+  color: var(--syntax-var-type);
+}
+
+:global(.token.selector) {
+  color: var(--syntax-var-type);
+}
+
+:global(.token.constant) {
+  color: var(--syntax-var-type);
+}
+
+:global(.token.symbol) {
+  color: var(--syntax-var-type);
+}
+
+:global(.token.builtin) {
+  color: var(--syntax-var-type);
+}
+
+/* Attributes & values */
+
+:global(.token.attr-name) {
+  color: var(--syntax-attr);
+}
+
+:global(.token.attr-value) {
+  color: var(--syntax-attr);
+}
+
+:global(.token.string) {
+  color: var(--syntax-attr);
+}
+
+:global(.token.char) {
+  color: var(--syntax-attr);
+}
+
+:global(.token.operator) {
+  color: var(--syntax-attr);
+}
+
+:global(.token.entity) {
+  color: var(--syntax-attr);
+}
+
+:global(.token.url) {
+  color: var(--syntax-attr);
+}
+
+:global(.token.variable) {
+  color: var(--syntax-attr);
+}
+
+:global(.token.inserted) {
+  color: var(--syntax-attr);
+}
+
+/* @-rules */
+
+:global(.token.atrule) {
+  color: var(--syntax-atrule);
+}
+
+/* Special modifiers */
+
+:global(.token.important) {
+  color: var(--syntax-special);
+}
+
+/* Regex */
+
+:global(.token.important) {
+  color: var(--syntax-regex);
 }
