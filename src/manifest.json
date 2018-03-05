@@ -4,6 +4,7 @@
   "short_name": "MACE",
   "minimum_chrome_version": "40",
   "permissions": [
+    "system.memory"
   ],
 	"chrome_url_overrides" : {
 	  "newtab": "index.html"

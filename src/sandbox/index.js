@@ -6,6 +6,7 @@ import {ACTIONS} from './constants'
 import {pretty} from 'js-object-pretty-print'
 // import util from 'util'
 
+// TODO: Move to utils
 // Just to be on the safe side we don't use conditions to check type
 function getTypeName(subject: any): ?string {
   try {
@@ -15,6 +16,7 @@ function getTypeName(subject: any): ?string {
   }
 }
 
+// TODO: Move to utils
 // Because some typeof-checks return undefined, though they exist...
 // typeof document.all === 'undefined' for example
 function getInstanceName(subject: any): ?string {
@@ -25,6 +27,7 @@ function getInstanceName(subject: any): ?string {
   }
 }
 
+// TODO: Move to utils
 function getElementAsString(element: ?HTMLElement | ?Document): ?string {
   const isDocument = element instanceof HTMLDocument
   // const isDocumentElement = element instanceof HTMLHtmlElement

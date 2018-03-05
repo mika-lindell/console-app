@@ -19,10 +19,11 @@
 .title {
   margin: 1rem var(--console-margin);
   font-family: var(--font-code);
-  font-size: 3.75rem;
+  font-size: var(--font-code-size);
   font-weight: var(--font-code-weight-normal);
-  line-height: 1.2;
+  line-height: 2;
   color: var(--console-title-color);
+  text-transform: uppercase;
 }
 
 .entry {
