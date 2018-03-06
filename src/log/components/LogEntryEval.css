@@ -1,149 +1,68 @@
-:root {
-  --syntax-secondary: #777;
-  --syntax-primary: #cf6a4c;
-  --syntax-var-type: #f9ee98;
-  --syntax-attr: #8f9d6a;
-  --syntax-atrule: #7587a6;
-  --syntax-important: #e9c062;
-  --syntax-regex: #e9c062;
+@import '../../styles/syntax.css';
+
+.entry {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem 0;
+  padding-right: var(--console-margin);
+  font-family: var(--font-code);
+  font-size: var(--font-code-size);
+  line-height: var(--font-code-line-height);
+  color: var(--log-entry-text-color);
 }
 
-/*
-  Syntax highlighting styles
-  Based on PrismJs Twilight-theme
-  https://github.com/PrismJS/prism/blob/gh-pages/themes/prism-twilight.css
-*/
-
-:global(.language-html) {
-  white-space: pre-wrap;
+.id {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex: 0;
+  flex-basis: var(--console-margin);
+  min-width: calc(var(--console-margin));
+  padding-top: 0.14rem;
+  font-family: var(--font-code);
+  font-size: 0.7rem;
+  color: var(--log-entry-id-color);
+  user-select: none;
 }
 
-:global(.language-javascript) {
-  white-space: pre-wrap;
+.dataWrapper {
+  display: flex;
+  flex-direction: column;
 }
 
-/* Secondary elements */
-
-:global(.token.comment) {
-  color: var(--syntax-secondary);
+.data {
+  display: flex;
+  flex-direction: row;
 }
 
-:global(.token.prolog) {
-  color: var(--syntax-secondary);
+.pointer {
+  padding-right: 0.5rem;
+  color: var(--teal);
 }
 
-:global(.token.doctype) {
-  color: var(--syntax-secondary);
+.result {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
 }
 
-:global(.token.cdata) {
-  color: var(--syntax-secondary);
+/* code {
+  border: none !important;
+  white-space: pre-wrap !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  font-family: var(--font-code) !important;
+} */
+
+.error {
+  color: var(--salmon);
 }
 
-:global(.token.punctuation) {
-  opacity: 0.7;
+.text {
+  color: var(--log-entry-text-color);
 }
 
-:global(.namespace) {
-  opacity: 0.7;
-}
-
-/* Primary elements */
-
-:global(.token.tag) {
-  color: var(--syntax-primary);
-}
-
-:global(.token.boolean) {
-  color: var(--syntax-primary);
-}
-
-:global(.token.number) {
-  color: var(--syntax-primary);
-}
-
-:global(.token.deleted) {
-  color: var(--syntax-primary);
-}
-
-/* Variable types */
-
-:global(.token.keyword) {
-  color: var(--syntax-var-type);
-}
-
-:global(.token.property) {
-  color: var(--syntax-var-type);
-}
-
-:global(.token.selector) {
-  color: var(--syntax-var-type);
-}
-
-:global(.token.constant) {
-  color: var(--syntax-var-type);
-}
-
-:global(.token.symbol) {
-  color: var(--syntax-var-type);
-}
-
-:global(.token.builtin) {
-  color: var(--syntax-var-type);
-}
-
-/* Attributes & values */
-
-:global(.token.attr-name) {
-  color: var(--syntax-attr);
-}
-
-:global(.token.attr-value) {
-  color: var(--syntax-attr);
-}
-
-:global(.token.string) {
-  color: var(--syntax-attr);
-}
-
-:global(.token.char) {
-  color: var(--syntax-attr);
-}
-
-:global(.token.operator) {
-  color: var(--syntax-attr);
-}
-
-:global(.token.entity) {
-  color: var(--syntax-attr);
-}
-
-:global(.token.url) {
-  color: var(--syntax-attr);
-}
-
-:global(.token.variable) {
-  color: var(--syntax-attr);
-}
-
-:global(.token.inserted) {
-  color: var(--syntax-attr);
-}
-
-/* @-rules */
-
-:global(.token.atrule) {
-  color: var(--syntax-atrule);
-}
-
-/* Special modifiers */
-
-:global(.token.important) {
-  color: var(--syntax-special);
-}
-
-/* Regex */
-
-:global(.token.important) {
-  color: var(--syntax-regex);
+.dataType {
+  color: var(--log-entry-type-color);
 }
