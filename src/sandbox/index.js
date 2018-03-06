@@ -58,13 +58,13 @@ function getAnythingAsString(result: any): string {
   return JSON.stringify(result, null, 2)
 }
 
-function intercept(method: string) {
+function interceptConsole(method: string) {
   const original = console[method]
   console[method] = function() {
     const response = {
       type: ACTIONS.consoleResponse,
       payload: {
-        expression: 'payload.expression',
+        text: getAnythingAsString(arguments),
       },
     }
     window.parent.postMessage(response, '*')
@@ -72,10 +72,10 @@ function intercept(method: string) {
   }
 }
 
-intercept('info')
-intercept('log')
-intercept('warn')
-intercept('error')
+interceptConsole('info')
+interceptConsole('log')
+interceptConsole('warn')
+interceptConsole('error')
 
 window.addEventListener('message', function(ev: MessageEvent) {
   console.log('Sandbox received an action:', ev.data)
@@ -105,7 +105,7 @@ window.addEventListener('message', function(ev: MessageEvent) {
           expression: payload.expression,
           text: getAnythingAsString(result),
           html: getElementAsString(result),
-          type: getTypeName(result),
+          dataType: getTypeName(result),
           instance: getInstanceName(result),
           error,
         },
@@ -121,8 +121,6 @@ window.addEventListener('message', function(ev: MessageEvent) {
       const actionErrorResponse = {
         type: ACTIONS.evaluateJsResponse,
         payload: {
-          result: String(result),
-          type: typeof result,
           error: actionErrorMessage,
         },
       }

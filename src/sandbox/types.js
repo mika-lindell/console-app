@@ -13,12 +13,7 @@ export type sandboxResponsePayload = {
   payload: LogEntry
 }
 
-export type ConsoleEntry = {
-  type: string,
-  content: any
-}
-
 export type consoleResponsePayload = {
   type: string,
-  payload: ConsoleEntry
+  payload: LogEntry
 }

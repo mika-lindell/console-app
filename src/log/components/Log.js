@@ -2,11 +2,9 @@
 
 import React, {PureComponent} from 'react'
 import {observer} from 'mobx-react'
-import PrismCode from 'react-prism'
+import LogEntryEval from './LogEntryEval'
 import LogStore from '../store'
 import css from './Log.css'
-
-require('prismjs')
 
 type LogProps = {}
 type LogState = {
@@ -102,57 +100,7 @@ class Log extends PureComponent {
           </h1>
         </li>
         {LogStore.entries.map((entry, index) => {
-          const showType = entry.type || entry.instance
-          return (
-            <li className={css.entry} key={entry.id}>
-              <div className={css.id}>{entry.id + 1}</div>
-              <div className={css.dataWrapper}>
-                <div className={css.expression}>
-                  <PrismCode className="language-javascript">
-                    {entry.expression}
-                  </PrismCode>
-                </div>
-                <div className={css.data}>
-                  <div className={css.pointer}>=> </div>
-                  <div className={css.result}>
-                    {!entry.error && (
-                      <div className={css.text}>
-                        {entry.html && (
-                          <span className={css.html}>
-                            <PrismCode className="language-html">
-                              {entry.html}
-                            </PrismCode>
-                          </span>
-                        )}
-                        {!entry.html && (
-                          <PrismCode className="language-javascript">
-                            {entry.text}
-                          </PrismCode>
-                        )}
-                        {showType && (
-                          <span className={css.type}>
-                            {' '}
-                            [
-                            <span>
-                              {entry.type}
-                              {entry.instance && ' '}
-                            </span>
-                            {entry.instance !== 'undefined' && (
-                              <span>{entry.instance}</span>
-                            )}
-                            ]
-                          </span>
-                        )}
-                      </div>
-                    )}
-                    {entry.error && (
-                      <div className={css.error}>{entry.error}</div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </li>
-          )
+          return <LogEntryEval entry={entry} key={entry.id} />
         })}
       </ul>
     )

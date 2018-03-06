@@ -2,10 +2,11 @@
 
 export type LogEntry = {
   id: number,
-  expression: string,
+  entryType: string,
+  dataType: ?string,
   error: ?string,
+  expression: ?string,
   html: ?string,
   instance: ?string,
-  text: ?string,
-  type: ?string
+  text: ?string
 }
