@@ -39,6 +39,9 @@ class Sandbox extends PureComponent {
       case ACTIONS.evaluateJsResponse:
         sandboxStore.evaluateJsResponse(payload)
         break
+      case ACTIONS.consoleResponse:
+        sandboxStore.consoleResponse(payload)
+        break
       default:
     }
   }

@@ -7,6 +7,7 @@ import CommandStore from '../command/store'
 // $FlowFixMe
 import type {Ref} from 'react'
 import type {LogEntry} from '../log/types'
+import type {ConsoleEntry} from '../log/types'
 import type {CommandExpression} from '../command/types'
 
 class SandboxStore {
@@ -28,6 +29,12 @@ class SandboxStore {
   evaluateJsResponse = (payload: LogEntry) => {
     LogStore.addEntry(payload)
     CommandStore.addHistoryEntry({expression: payload.expression})
+  }
+
+  // We received response about expression we sent to sandbox
+  @action
+  consoleResponse = (payload: LogEntry) => {
+    LogStore.addEntry(payload)
   }
 }
 

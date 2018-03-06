@@ -30,7 +30,7 @@ function getInstanceName(subject: any): ?string {
 // TODO: Move to utils
 // Parse HTML Dom object to string
 function getElementAsString(element: ?HTMLElement | ?Document): ?string {
-  const isDocument = element instanceof HTMLDocument
+  const isDocument = element instanceof Document
   // const isDocumentElement = element instanceof HTMLHtmlElement
   const isAnyElement = element instanceof HTMLElement
   // It's HTML document
@@ -57,6 +57,25 @@ function getAnythingAsString(result: any): string {
   }
   return JSON.stringify(result, null, 2)
 }
+
+function intercept(method: string) {
+  const original = console[method]
+  console[method] = function() {
+    const response = {
+      type: ACTIONS.consoleResponse,
+      payload: {
+        expression: 'payload.expression',
+      },
+    }
+    window.parent.postMessage(response, '*')
+    original.apply(console, arguments)
+  }
+}
+
+intercept('info')
+intercept('log')
+intercept('warn')
+intercept('error')
 
 window.addEventListener('message', function(ev: MessageEvent) {
   console.log('Sandbox received an action:', ev.data)
