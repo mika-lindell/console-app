@@ -2,8 +2,9 @@
 // This is the script which will execute in sandbox
 // It's embedded as an iframe and will communicate with our app via postMessage
 
-import {pretty} from 'js-object-pretty-print'
-import isArrayLikeObject from 'lodash/isArrayLikeObject'
+// import {pretty as prettyObject} from 'js-object-pretty-print'
+// import isArrayLikeObject from 'lodash/isArrayLikeObject'
+// import mapValues from 'lodash/mapValues'
 import {ACTIONS} from './constants'
 
 // TODO: Move to utils
@@ -29,7 +30,7 @@ function getInstanceName(subject: any): ?string {
 
 // TODO: Move to utils
 // Parse HTML Dom object to string
-function getElementAsString(element: ?HTMLElement | ?Document): ?string {
+function getElementAsString(element: any): ?string {
   const isDocument = element instanceof Document
   // const isDocumentElement = element instanceof HTMLHtmlElement
   const isAnyElement = element instanceof HTMLElement
@@ -52,9 +53,9 @@ function getElementAsString(element: ?HTMLElement | ?Document): ?string {
 function getAnythingAsString(result: any): string {
   // If some people writing js libraries could just actually throw an error
   // When you have an error we could use try/catch ...
-  if (isArrayLikeObject(result)) {
-    return pretty(result)
-  }
+  // if (isArrayLikeObject(result)) {
+  //   return prettyObject(result)
+  // }
   return JSON.stringify(result, null, 2)
 }
 

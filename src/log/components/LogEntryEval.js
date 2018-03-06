@@ -2,7 +2,9 @@
 
 import React from 'react'
 import PrismCode from 'react-prism'
+import pretty from 'js-beautify'
 import css from './LogEntryEval.css'
+import {PRETTY_JS_OPTIONS, PRETTY_HTML_OPTIONS} from '../constants'
 import type {LogEntry} from '../types'
 
 require('prismjs')
@@ -30,15 +32,16 @@ const LogEntryEval = ({entry}: LogEntryProps) => {
                 {entry.html && (
                   <span className={css.html}>
                     <PrismCode className="language-html">
-                      {entry.html}
+                      {pretty.html(entry.html, PRETTY_HTML_OPTIONS)}
                     </PrismCode>
                   </span>
                 )}
-                {!entry.html && (
-                  <PrismCode className="language-javascript">
-                    {entry.text}
-                  </PrismCode>
-                )}
+                {!entry.html &&
+                entry.text && (
+                    <PrismCode className="language-javascript">
+                      {pretty.js(entry.text, PRETTY_JS_OPTIONS)}
+                    </PrismCode>
+                  )}
                 {showType && (
                   <span className={css.dataType}>
                     {' '}
