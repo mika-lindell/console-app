@@ -58,16 +58,23 @@ function getAnythingAsString(result: any): string {
   return JSON.stringify(result, null, 2)
 }
 
+// Proxy desired console. -commands
+// Applies only to commands executed inside sandbox
 function interceptConsole(method: string) {
   const original = console[method]
   console[method] = function() {
-    const response = {
-      type: ACTIONS.consoleResponse,
-      payload: {
-        text: getAnythingAsString(arguments),
-      },
+    // Do not notify app about console entry if
+    // first arg equals @ignore
+    if (arguments[0] !== '@ignore') {
+      const response = {
+        type: ACTIONS.consoleResponse,
+        payload: {
+          text: getAnythingAsString(arguments),
+        },
+      }
+      window.parent.postMessage(response, '*')
     }
-    window.parent.postMessage(response, '*')
+    // Call "real" console. -command
     original.apply(console, arguments)
   }
 }
@@ -78,7 +85,7 @@ interceptConsole('warn')
 interceptConsole('error')
 
 window.addEventListener('message', function(ev: MessageEvent) {
-  console.log('Sandbox received an action:', ev.data)
+  console.log('@ignore', 'Sandbox received an action:', ev.data)
   // $FlowFixMe
   const {type, payload} = ev.data
   let result = undefined
@@ -111,12 +118,12 @@ window.addEventListener('message', function(ev: MessageEvent) {
         },
       }
       ev.source.postMessage(response, ev.origin)
-      console.log('Sandbox sent an action:', response)
+      console.log('@ignore', 'Sandbox sent an action:', response)
       break
     // Handle cases where action is of unknown type
     default:
       const actionErrorMessage = `Sandbox didn't recognize action '${type}':`
-      console.error(actionErrorMessage, ':', ev.data)
+      console.error('@ignore', actionErrorMessage, ':', ev.data)
       // Send error message as response
       const actionErrorResponse = {
         type: ACTIONS.evaluateJsResponse,
