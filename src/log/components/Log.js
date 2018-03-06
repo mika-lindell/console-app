@@ -17,17 +17,7 @@ type ChromeMemoryResult = {
   availableCapacity: number,
   capacity: number
 }
-/** TODO
-  Make this into stateful component
-  and add this to componentDidUpdate:
 
-  window.scroll({
-    top: document.body.clientHeight,
-    left: 0,
-    behavior: 'smooth',
-  })
-
-*/
 @observer
 class Log extends PureComponent {
   props: LogProps
@@ -38,7 +28,7 @@ class Log extends PureComponent {
 
   updateMemory: ChromeMemoryResult => void
 
-  constructor(props) {
+  constructor(props: LogProps) {
     super(props)
     this.updateMemory = this.updateMemory.bind(this)
   }
@@ -47,7 +37,6 @@ class Log extends PureComponent {
     /* eslint-disable */
     /* $FlowIgnore */
     if (chrome) {
-      // $FlowIgnore
       chrome.system.memory.getInfo(this.updateMemory)
     }
     /* eslint-enable */
@@ -55,7 +44,7 @@ class Log extends PureComponent {
 
   componentDidUpdate() {
     window.scroll({
-      top: document.body.clientHeight,
+      top: document.body ? document.body.clientHeight : 0,
       left: 0,
       behavior: 'smooth',
     })
@@ -70,19 +59,34 @@ class Log extends PureComponent {
 
   // TODO: Move to utils
   // https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript
-  formatBytes(bytes: number, decimals: number = 2) {
+  formatBytes(
+    bytes: number,
+    decimals: number = 2,
+    useLongNames: boolean = false
+  ) {
     if (bytes === 0) return '0 Bytes'
     const k = 1024
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+    const shortNames = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+    const longNames = [
+      'Bytes',
+      'Kilobytes',
+      'Megabytes',
+      'Gigabytes',
+      'Terabytes',
+      'PB',
+      'EB',
+      'ZB',
+      'YB',
+    ]
+    const sizeNames = useLongNames ? longNames : shortNames
     const i = Math.floor(Math.log(bytes) / Math.log(k))
-    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(decimals))}${sizes[
-      i
-    ]}`
+    return `${parseFloat(
+      (bytes / Math.pow(k, i)).toFixed(decimals)
+    )}${useLongNames ? ' ' : ''}${sizeNames[i]}`
   }
 
   render() {
     const {availableMemory, totalMemory} = this.state
-
     const chromeVersion = navigator.appVersion.match(/.*Chrome\/([0-9.]+)/)[1]
 
     return (
@@ -91,8 +95,8 @@ class Log extends PureComponent {
           <h1 className={css.title}>
             **** Chrome {chromeVersion} ****
             <br />
-            {this.formatBytes(totalMemory)} ram system{' '}
-            {this.formatBytes(availableMemory)} free
+            {this.formatBytes(totalMemory)} ram system{'  '}
+            {this.formatBytes(availableMemory, 2, true)} free
             <br />
             Ready.
           </h1>
