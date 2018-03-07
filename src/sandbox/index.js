@@ -2,9 +2,6 @@
 // This is the script which will execute in sandbox
 // It's embedded as an iframe and will communicate with our app via postMessage
 
-// import {pretty as prettyObject} from 'js-object-pretty-print'
-// import isArrayLikeObject from 'lodash/isArrayLikeObject'
-// import map from 'lodash/map'
 import {ACTIONS} from './constants'
 
 // TODO: Move to utils
@@ -50,29 +47,47 @@ function getElementAsString(element: any): ?string {
 
 // TODO: Move to utils
 // Parse anything Javascript to string
-function getAnythingAsString(something: any): string {
-  // If some people writing js libraries could just actually throw an error
-  // When you have an error we could use try/catch ...
-  // if (isArrayLikeObject(result)) {
-  //   return prettyObject(result)
-  // }
-
-  // MEMBA HTMLAllCollection
-
-  // Check if something is iterable for pretty printing
-  // Null is an object so we need to exclude it
-  if (something != null && typeof something[Symbol.iterator] === 'function') {
-    const stringified = []
-    const newLine = '\r\n'
-    for (let keyOrIndex in something) {
-      // typeof something === string then add " "
-      stringified.push(`${keyOrIndex}: ${String(something)}`)
+function getAnythingAsString(something: any, deep: boolean = true): string {
+  // Parse objects, arrays and collections
+  if (typeof something === 'object' || something instanceof HTMLAllCollection) {
+    // When we just want to display the type of the object, not its contents
+    if (!deep) {
+      return String(something)
     }
-    console.log(stringified)
-    return `{${newLine}${stringified.join(newLine)}${newLine}}`
+
+    const stringified = []
+    const isArray = something instanceof Array
+    const prefix = isArray ? '[' : '{'
+    const suffix = isArray ? ']' : '}'
+
+    const makeItem = (item: any, id: ?string | ?number) => {
+      // Print item w/ key/index
+      if (id) {
+        return `${id}: ${getAnythingAsString(item, false)}`
+      }
+      // Print item w/o key/index
+      return `${getAnythingAsString(item, false)}`
+    }
+
+    for (let keyOrIndex in something) {
+      const id = isArray ? null : keyOrIndex
+      stringified.push(makeItem(something[keyOrIndex], id))
+    }
+    return `${prefix} ${stringified.join(', ')} ${suffix}`
   }
 
-  return JSON.stringify(something, null, 2)
+  // Parse functions
+  if (typeof something === 'function') {
+    return String(something)
+  }
+
+  // Parse strings
+  if (typeof something === 'string') {
+    return `'${something}'`
+  }
+
+  // Parse anything else
+  return String(something)
 }
 
 // Proxy desired console. -commands

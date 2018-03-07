@@ -4528,10 +4528,6 @@ js-beautify@^1.7.5:
     mkdirp "~0.5.0"
     nopt "~3.0.1"
 
-js-object-pretty-print@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/js-object-pretty-print/-/js-object-pretty-print-0.3.0.tgz#4670e450066ee1eccf35174c7d197f5aa38bcf74"
-
 js-tokens@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.1.tgz#08e9f132484a2c45a30907e9dc4d5567b7f114d7"
