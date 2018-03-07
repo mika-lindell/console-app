@@ -15,7 +15,7 @@ function getTypeName(subject: any): ?string {
 }
 
 // TODO: Move to utils
-// Because some typeof-checks return undefined, though they exist...
+// try ... catch because some typeof-checks return undefined, though they exist...
 // typeof document.all === 'undefined' for example
 function getInstanceName(subject: any): ?string {
   try {
@@ -29,7 +29,6 @@ function getInstanceName(subject: any): ?string {
 // Parse HTML Dom object to string
 function getElementAsString(element: any): ?string {
   const isDocument = element instanceof Document
-  // const isDocumentElement = element instanceof HTMLHtmlElement
   const isAnyElement = element instanceof HTMLElement
   // It's HTML document
   if (isDocument) {
@@ -45,6 +44,20 @@ function getElementAsString(element: any): ?string {
   return undefined
 }
 
+// Parse any Javascript collection item to string
+function getCollectionItemAsString(
+  collection: any,
+  key: string | number,
+  isArray: boolean = false
+) {
+  // Print item w/ key/index
+  if (isArray) {
+    return `${getAnythingAsString(collection[key], false)}`
+  }
+  // Print item w/o key/index
+  return `${key}: ${getAnythingAsString(collection[key], false)}`
+}
+
 // TODO: Move to utils
 // Parse anything Javascript to string
 function getAnythingAsString(something: any, deep: boolean = true): string {
@@ -56,22 +69,13 @@ function getAnythingAsString(something: any, deep: boolean = true): string {
     }
 
     const stringified = []
+    const keys = Object.keys(something)
     const isArray = something instanceof Array
     const prefix = isArray ? '[' : '{'
     const suffix = isArray ? ']' : '}'
 
-    const makeItem = (item: any, id: ?string | ?number) => {
-      // Print item w/ key/index
-      if (id) {
-        return `${id}: ${getAnythingAsString(item, false)}`
-      }
-      // Print item w/o key/index
-      return `${getAnythingAsString(item, false)}`
-    }
-
-    for (let keyOrIndex in something) {
-      const id = isArray ? null : keyOrIndex
-      stringified.push(makeItem(something[keyOrIndex], id))
+    for (let key of keys) {
+      stringified.push(getCollectionItemAsString(something, key, isArray))
     }
     return `${prefix} ${stringified.join(', ')} ${suffix}`
   }
@@ -122,6 +126,8 @@ window.addEventListener('message', function(ev: MessageEvent) {
   // $FlowFixMe
   const {type, payload} = ev.data
   let result = undefined
+  let text = undefined
+  let html = undefined
   let error = undefined
 
   switch (type) {
@@ -134,6 +140,8 @@ window.addEventListener('message', function(ev: MessageEvent) {
       try {
         // eslint-disable-next-line no-eval
         result = window.eval(parsedExpression)
+        text = getAnythingAsString(result)
+        html = getElementAsString(result)
       } catch (err) {
         error = err.toString()
       }
@@ -143,8 +151,8 @@ window.addEventListener('message', function(ev: MessageEvent) {
         type: ACTIONS.evaluateJsResponse,
         payload: {
           expression: payload.expression,
-          text: getAnythingAsString(result),
-          html: getElementAsString(result),
+          text,
+          html,
           dataType: getTypeName(result),
           instance: getInstanceName(result),
           error,
