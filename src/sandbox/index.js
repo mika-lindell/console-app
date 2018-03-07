@@ -4,7 +4,7 @@
 
 // import {pretty as prettyObject} from 'js-object-pretty-print'
 // import isArrayLikeObject from 'lodash/isArrayLikeObject'
-// import mapValues from 'lodash/mapValues'
+// import map from 'lodash/map'
 import {ACTIONS} from './constants'
 
 // TODO: Move to utils
@@ -50,40 +50,57 @@ function getElementAsString(element: any): ?string {
 
 // TODO: Move to utils
 // Parse anything Javascript to string
-function getAnythingAsString(result: any): string {
+function getAnythingAsString(something: any): string {
   // If some people writing js libraries could just actually throw an error
   // When you have an error we could use try/catch ...
   // if (isArrayLikeObject(result)) {
   //   return prettyObject(result)
   // }
-  return JSON.stringify(result, null, 2)
+
+  // MEMBA HTMLAllCollection
+
+  // Check if something is iterable for pretty printing
+  // Null is an object so we need to exclude it
+  if (something != null && typeof something[Symbol.iterator] === 'function') {
+    const stringified = []
+    const newLine = '\r\n'
+    for (let keyOrIndex in something) {
+      // typeof something === string then add " "
+      stringified.push(`${keyOrIndex}: ${String(something)}`)
+    }
+    console.log(stringified)
+    return `{${newLine}${stringified.join(newLine)}${newLine}}`
+  }
+
+  return JSON.stringify(something, null, 2)
 }
 
 // Proxy desired console. -commands
 // Applies only to commands executed inside sandbox
-function interceptConsole(method: string) {
-  const original = console[method]
-  console[method] = function() {
-    // Do not notify app about console entry if
-    // first arg equals @ignore
-    if (arguments[0] !== '@ignore') {
-      const response = {
-        type: ACTIONS.consoleResponse,
-        payload: {
-          text: getAnythingAsString(arguments),
-        },
-      }
-      window.parent.postMessage(response, '*')
-    }
-    // Call "real" console. -command
-    original.apply(console, arguments)
-  }
-}
+// function interceptConsole(method: string) {
+//   const original = console[method]
+//   console[method] = function() {
+//     // Do not notify app about console entry if
+//     // first arg equals @ignore
+//     if (arguments[0] !== '@ignore') {
+//       const response = {
+//         type: ACTIONS.consoleResponse,
+//         payload: {
+//           text: getAnythingAsString(arguments),
+//         },
+//       }
+//       window.parent.postMessage(response, '*')
+//     }
+//     // Call "real" console. -command
+//     original.apply(console, arguments)
+//   }
+// }
 
-interceptConsole('info')
-interceptConsole('log')
-interceptConsole('warn')
-interceptConsole('error')
+// Uncomment to enable capturing of log events
+// interceptConsole('info')
+// interceptConsole('log')
+// interceptConsole('warn')
+// interceptConsole('error')
 
 window.addEventListener('message', function(ev: MessageEvent) {
   console.log('@ignore', 'Sandbox received an action:', ev.data)
